@@ -2,7 +2,7 @@
 
 public class MusicEnum
 {
-    public enum MusicTpye_Main
+    public enum MusicType_Main
     {
         MainBgm,
     }

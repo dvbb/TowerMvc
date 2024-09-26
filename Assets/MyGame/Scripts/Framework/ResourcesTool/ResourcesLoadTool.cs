@@ -6,7 +6,7 @@ public class ResourcesLoadTool : Singleton<ResourcesLoadTool>
     {
         string currentName = obj.GetType().Name;
         string filePath = string.Empty;
-
+        Debug.Log(currentName);
         switch (currentName)
         {
             case "MusicType_Main":
@@ -18,6 +18,9 @@ public class ResourcesLoadTool : Singleton<ResourcesLoadTool>
             default:
                 break;
         }
+        Debug.Log(filePath);
+        Debug.Log(typeof(T).Name);
+        
 
         return Resources.Load(filePath) as T;
     }

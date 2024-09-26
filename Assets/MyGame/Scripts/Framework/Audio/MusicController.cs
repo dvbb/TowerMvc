@@ -31,6 +31,8 @@ public class MusicController : MonoSingleton<MusicController>
     public void PlayMusicByName(object enumName, bool isLoop = false)
     {
         var clip = ResourcesLoadTool.Instance.ResourceLoadObject<AudioClip>(enumName);
+        Debug.Log(enumName);
+        Debug.Log(clip);
         music.clip = clip;
         music.loop = isLoop;
         music.Play();
