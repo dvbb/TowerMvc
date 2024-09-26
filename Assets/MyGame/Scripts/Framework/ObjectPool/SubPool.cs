@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class SubPool
+{
+    List<GameObject> mySubPool = new List<GameObject>();
+    GameObject m_Prefab;
+
+    public string Name
+    {
+        get
+        {
+            return m_Prefab.name;
+        }
+    }
+
+    public SubPool(GameObject prefab)
+    {
+        m_Prefab = prefab;
+    }
+
+    public GameObject Spawn()
+    {
+        GameObject obj = null;
+        foreach (var item in mySubPool)
+        {
+            if (!item.activeSelf)
+            {
+                obj = item;
+                break;
+            }
+        }
+
+        if (obj == null)
+        {
+            obj = GameObject.Instantiate(m_Prefab);
+            mySubPool.Add(obj);
+        }
+        obj.SetActive(true);
+
+        IReusable reusable = obj.GetComponent<IReusable>();
+        reusable?.Spawn();
+
+        return obj;
+    }
+
+    public void UnSpawn(GameObject obj)
+    {
+        if (mySubPool.Contains(obj))
+        {
+            IReusable ir = obj.GetComponent<IReusable>();
+            if (ir != null)
+            {
+                ir.UnSpawn();
+            }
+            obj.SetActive(false);
+        }
+    }
+
+    public void UnSpawnAll()
+    {
+        foreach (var obj in mySubPool)
+        {
+            if (obj.activeSelf)
+                UnSpawn(obj);
+        }
+    }
+
+    public bool ContainObject(GameObject obj)
+    {
+        return mySubPool.Contains(obj);
+    }
+}
