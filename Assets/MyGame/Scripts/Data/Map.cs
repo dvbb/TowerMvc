@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,18 @@ public class Grid
     }
 }
 
+public class GridClickEventArgs : EventArgs
+{
+    public int MouseBtnId;
+    public Grid Grid;
+
+    public GridClickEventArgs(int mouseBtn, Grid grid)
+    {
+        MouseBtnId = mouseBtn;
+        Grid = grid;
+    }
+}
+
 public class Map : MonoBehaviour
 {
     #region Field
@@ -32,6 +45,8 @@ public class Map : MonoBehaviour
     #endregion
     public const int RowCount = 7;
     public const int ColCount = 12;
+
+    public event EventHandler<GridClickEventArgs> onGridClicked;
 
     public Level Level { get { return m_level; } }
     public List<Grid> Road { get { return m_road; } }
@@ -51,6 +66,28 @@ public class Map : MonoBehaviour
         {
             SpriteRenderer render = transform.Find("Road").GetComponent<SpriteRenderer>();
             StartCoroutine(Tools.LoadImage(value, render));
+        }
+    }
+
+    private void Awake()
+    {
+        Level level = new Level();
+        Tools.ParseXml("D:\\repo\\TowerMvc\\Assets\\Resources\\UI\\Levels\\Level1.xml", ref level);
+        LoadLevel(level);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("1 update keydown");
+            Grid grid = GetGridByMouse();
+            if (grid != null)
+            {
+                GridClickEventArgs arg = new GridClickEventArgs(0, grid);
+                if (onGridClicked != null)
+                    OnGridClick(this, arg);
+            }
         }
     }
 
@@ -90,14 +127,65 @@ public class Map : MonoBehaviour
     private Grid GetGrid(int x, int y)
     {
         int index = x + y * ColCount;
+        Debug.Log("5: " + index);
+        Debug.Log("5: " + m_grid.Count);
         if (index >= 0 && index < m_grid.Count)
         {
             return m_grid[index];
         }
-        else 
+        else
         {
             Debug.Log("m_grid index error");
-            return null; 
+            return null;
+        }
+    }
+
+    #endregion
+
+    #region Click event
+
+    private Grid GetGridByMouse()
+    {
+        Vector3 worldPosition = GetWorldPosition();
+        Debug.Log("2 get world position" + worldPosition);
+        Grid grid = GetGridByWorldPosition(worldPosition);
+        return grid;
+    }
+
+    private Vector3 GetWorldPosition()
+    {
+        Vector3 viewPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        Vector3 worldPosition = Camera.main.ViewportToWorldPoint(viewPosition);
+        return worldPosition;
+    }
+
+    private Grid GetGridByWorldPosition(Vector3 worldPosition)
+    {
+        int x = (int)((worldPosition.x + MapWidth / 2) / GridWidth);
+        int y = (int)((worldPosition.y + MapHeight / 2) / GridHeight);
+        Debug.Log("3 xy:" + x + "   " + y);
+        return GetGrid(x, y);
+    }
+
+    #endregion
+
+    #region Event Regresion
+
+    private void OnGridClick(object sender, GridClickEventArgs args)
+    {
+        if (gameObject.scene.name != "Map" || Level == null)
+            return;
+
+        // Set Turret position
+        if (args.MouseBtnId == 0 && !m_road.Contains(args.Grid))
+        {
+            args.Grid.IsHolder = !args.Grid.IsHolder;
+        }
+
+        // Set Road
+        if (args.MouseBtnId == 1 && !args.Grid.IsHolder)
+        {
+
         }
     }
 

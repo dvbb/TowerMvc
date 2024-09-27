@@ -10,11 +10,20 @@ public static class Tools
 {
     public static void ParseXml(string fileName, ref Level level)
     {
+        Debug.Log(fileName);
         FileInfo file = new FileInfo(fileName);
         StreamReader sr = new StreamReader(file.OpenRead(), Encoding.UTF8);
 
+        ;
+        Debug.Log(sr.ToString());
+        Debug.Log(sr.ReadLine().ToString());
+
         XmlDocument doc = new XmlDocument();
         doc.Load(sr);
+
+        Debug.Log(doc);
+        Debug.Log(doc.SelectSingleNode("/Level").InnerText);
+        Debug.Log(doc.SelectSingleNode("/Level/Name").InnerText);
 
         level.Name = doc.SelectSingleNode("/Level/Name").InnerText;
         level.CardImage = doc.SelectSingleNode("/Level/CardImage").InnerText;
