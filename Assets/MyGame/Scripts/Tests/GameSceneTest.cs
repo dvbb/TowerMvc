@@ -12,7 +12,7 @@ public class GameSceneTest : MonoBehaviour
         // play main bgm
         if (Input.GetKeyDown(KeyCode.P))
         {
-            MusicController.Instance.PlayMusicByName(MusicEnum.MusicType_Main.MainBgm);
+            MusicController.Instance.PlayMusic(MusicEnum.MusicType_Main.MainBgm);
         }
     }
 }
