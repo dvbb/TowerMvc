@@ -45,6 +45,7 @@ public class Map : MonoBehaviour
     #endregion
     public const int RowCount = 7;
     public const int ColCount = 12;
+    public const int TotalGrid = RowCount * ColCount;
 
     public event EventHandler<GridClickEventArgs> onGridClicked;
 
@@ -57,7 +58,8 @@ public class Map : MonoBehaviour
         set
         {
             SpriteRenderer render = transform.Find("Background").GetComponent<SpriteRenderer>();
-            StartCoroutine(Tools.LoadImage(value, render));
+            if (render.sprite == null)
+                StartCoroutine(Tools.LoadImage(value, render));
         }
     }
     public string RoadImg
@@ -65,22 +67,28 @@ public class Map : MonoBehaviour
         set
         {
             SpriteRenderer render = transform.Find("Road").GetComponent<SpriteRenderer>();
-            StartCoroutine(Tools.LoadImage(value, render));
+            if (render.sprite == null)
+                StartCoroutine(Tools.LoadImage(value, render));
         }
     }
 
     private void Awake()
     {
+        onGridClicked += OnGridClick;
+        for (int x = 0; x < RowCount; x++) // 7 row
+            for (int y = 0; y < ColCount; y++) // 12 column
+                m_grid.Add(new Grid(x, y));
+
         Level level = new Level();
         Tools.ParseXml("D:\\repo\\TowerMvc\\Assets\\Resources\\UI\\Levels\\Level1.xml", ref level);
         LoadLevel(level);
+
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("1 update keydown");
             Grid grid = GetGridByMouse();
             if (grid != null)
             {
@@ -107,8 +115,8 @@ public class Map : MonoBehaviour
     {
         Clear();
         this.m_level = level;
-        this.BackgroundImg = "file://" + Consts.MapDir + level.Background;
-        this.RoadImg = "file://" + Consts.MapDir + level.Road;
+        this.BackgroundImg = "UI/Maps/" + level.Background;
+        this.RoadImg = "UI/Maps/" + level.Road;
 
         for (int i = 0; i < level.Path.Count; i++)
         {
@@ -120,15 +128,15 @@ public class Map : MonoBehaviour
         {
             Point point = level.Holder[i];
             Grid grid = GetGrid(point.X, point.Y);
-            grid.IsHolder = true;
+            if (grid != null)
+                grid.IsHolder = true;
         }
     }
 
     private Grid GetGrid(int x, int y)
     {
+        Debug.Log(x + " " + y);
         int index = x + y * ColCount;
-        Debug.Log("5: " + index);
-        Debug.Log("5: " + m_grid.Count);
         if (index >= 0 && index < m_grid.Count)
         {
             return m_grid[index];
@@ -147,7 +155,6 @@ public class Map : MonoBehaviour
     private Grid GetGridByMouse()
     {
         Vector3 worldPosition = GetWorldPosition();
-        Debug.Log("2 get world position" + worldPosition);
         Grid grid = GetGridByWorldPosition(worldPosition);
         return grid;
     }
@@ -163,7 +170,6 @@ public class Map : MonoBehaviour
     {
         int x = (int)((worldPosition.x + MapWidth / 2) / GridWidth);
         int y = (int)((worldPosition.y + MapHeight / 2) / GridHeight);
-        Debug.Log("3 xy:" + x + "   " + y);
         return GetGrid(x, y);
     }
 

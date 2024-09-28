@@ -10,25 +10,16 @@ public static class Tools
 {
     public static void ParseXml(string fileName, ref Level level)
     {
-        Debug.Log(fileName);
         FileInfo file = new FileInfo(fileName);
         StreamReader sr = new StreamReader(file.OpenRead(), Encoding.UTF8);
-
-        ;
-        Debug.Log(sr.ToString());
-        Debug.Log(sr.ReadLine().ToString());
 
         XmlDocument doc = new XmlDocument();
         doc.Load(sr);
 
-        Debug.Log(doc);
-        Debug.Log(doc.SelectSingleNode("/Level").InnerText);
-        Debug.Log(doc.SelectSingleNode("/Level/Name").InnerText);
-
         level.Name = doc.SelectSingleNode("/Level/Name").InnerText;
         level.CardImage = doc.SelectSingleNode("/Level/CardImage").InnerText;
         level.Background = doc.SelectSingleNode("/Level/Background").InnerText;
-        level.Road = doc.SelectSingleNode("/Level/Name").InnerText;
+        level.Road = doc.SelectSingleNode("/Level/Road").InnerText;
         level.InitScore = int.Parse(doc.SelectSingleNode("/Level/InitScore").InnerText);
 
         XmlNodeList nodes;
@@ -38,14 +29,6 @@ public static class Tools
             XmlNode node = nodes[i];
             Point point = new Point(int.Parse(node.Attributes["X"].Value), int.Parse(node.Attributes["Y"].Value));
             level.Holder.Add(point);
-        }
-
-        nodes = doc.SelectNodes("/Level/Holder/Point");
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            XmlNode node = nodes[i];
-            Point point = new Point(int.Parse(node.Attributes["X"].Value), int.Parse(node.Attributes["Y"].Value));
-            level.Path.Add(point);
         }
 
         nodes = doc.SelectNodes("/Level/Path/Point");
@@ -78,8 +61,8 @@ public static class Tools
         sb.AppendLine(string.Format("<Name>{0}</Name>", level.Name));
         sb.AppendLine(string.Format("<CardImage>{0}</CardImage>", level.CardImage));
         sb.AppendLine(string.Format("<Background>{0}</Background>", level.Background));
-        sb.AppendLine(string.Format("<Road>{0}</CardImage>", level.Road));
-        sb.AppendLine(string.Format("<InitScore>{0}</InitScore>", level.Road));
+        sb.AppendLine(string.Format("<Road>{0}</Road>", level.Road));
+        sb.AppendLine(string.Format("<InitScore>{0}</InitScore>", level.InitScore));
 
         // Holder
         sb.AppendLine("Holder");
@@ -126,8 +109,10 @@ public static class Tools
         writer.Dispose();
     }
 
-    public static IEnumerator LoadImage(string url, SpriteRenderer render)
+    public static IEnumerator LoadImageFromUrl(string url, SpriteRenderer render)
     {
+        Debug.Log(url);
+
         WWW www = new WWW(url);
         while (!www.isDone)
             yield return www;
@@ -138,5 +123,19 @@ public static class Tools
             new Rect(0, 0, texture.width, texture.height),
            new Vector2(.5f, .5f));
         render.sprite = sp;
+    }
+
+
+    public static IEnumerator LoadImage(string url, SpriteRenderer render)
+    {
+        Debug.Log(url);
+        Texture2D texture = Resources.Load(url) as Texture2D;
+        Sprite sp = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+           new Vector2(.5f, .5f));
+        render.sprite = sp;
+        //render.sprite = sprite;
+        yield return .1f;
     }
 }

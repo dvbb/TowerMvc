@@ -1,9 +1,9 @@
 <?xml version="1.0"  encoding="utf-8"?>
 <Level>
-<Name>第二关:继续战斗</Name>
-<CardImage>card1.png</CardImage>
-<Background>bg1.png</Background>
-<Road>road2.png</Road>
+<Name>Level: THE FIRST</Name>
+<CardImage>card1</CardImage>
+<Background>background_1</Background>
+<Road>Road1</Road>
 <InitScore>10</InitScore>
 <Holder>
 <Point X="4" Y="0"/>

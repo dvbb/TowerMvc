@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Consts
 {
-    public static string MapDir = "/Resources/UI/Maps";
+    public static string MapDir = "Resources/UI/Maps/";
 }
