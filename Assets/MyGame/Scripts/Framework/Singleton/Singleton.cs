@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> where T : new()
+public abstract class Singleton<T> where T : new()
 {
     private static T _instance;
     private static object mutext = new object();
