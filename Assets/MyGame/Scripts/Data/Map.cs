@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Grid
 {
@@ -46,6 +49,8 @@ public class Map : MonoBehaviour
     public const int RowCount = 7;
     public const int ColCount = 12;
     public const int TotalGrid = RowCount * ColCount;
+    public Vector3 mapZeorVector => new Vector3(-MapWidth / 2, -MapHeight / 2);
+    public Vector3 gridOffSet => new Vector3(GridWidth / 2, GridHeight / 2);
 
     public event EventHandler<GridClickEventArgs> onGridClicked;
 
@@ -75,14 +80,13 @@ public class Map : MonoBehaviour
     private void Awake()
     {
         onGridClicked += OnGridClick;
-        for (int x = 0; x < RowCount; x++) // 7 row
-            for (int y = 0; y < ColCount; y++) // 12 column
-                m_grid.Add(new Grid(x, y));
+        for (int y = 0; y < RowCount; y++) // 7 row  0 < y < 7
+            for (int x = 0; x < ColCount; x++) // 12 column  0 < x < 12
+                m_grid.Add(new Grid(x, y)); //(0,0) (0,1) ... (0,11) (1,0) ... (7,0)
 
         Level level = new Level();
         Tools.ParseXml("D:\\repo\\TowerMvc\\Assets\\Resources\\UI\\Levels\\Level1.xml", ref level);
         LoadLevel(level);
-
     }
 
     private void Update()
@@ -135,8 +139,8 @@ public class Map : MonoBehaviour
 
     private Grid GetGrid(int x, int y)
     {
-        Debug.Log(x + " " + y);
         int index = x + y * ColCount;
+
         if (index >= 0 && index < m_grid.Count)
         {
             return m_grid[index];
@@ -146,6 +150,16 @@ public class Map : MonoBehaviour
             Debug.Log("m_grid index error");
             return null;
         }
+    }
+
+    private Vector3 GetGridPosition(int x, int y)
+    {
+        int index = x + y * ColCount;
+        if (index < m_grid.Count)
+        {
+            return mapZeorVector + gridOffSet + new Vector3(m_grid[index].X * GridWidth, m_grid[index].Y * GridHeight);
+        }
+        return Vector3.zero;
     }
 
     #endregion
@@ -185,6 +199,7 @@ public class Map : MonoBehaviour
         // Set Turret position
         if (args.MouseBtnId == 0 && !m_road.Contains(args.Grid))
         {
+            Debug.Log(args.Grid.X + "," + args.Grid.Y);
             args.Grid.IsHolder = !args.Grid.IsHolder;
         }
 
@@ -202,6 +217,8 @@ public class Map : MonoBehaviour
     {
         CalculateMapAndGrid();
 
+
+        // Draw Grid in map scene
         for (int row = 0; row < RowCount; row++)
         {
             Vector2 from = new Vector2(-MapWidth / 2, -MapHeight / 2 + row * GridHeight);
@@ -213,6 +230,38 @@ public class Map : MonoBehaviour
             Vector2 from = new Vector2(-MapWidth / 2 + column * GridWidth, -MapHeight / 2);
             Vector2 to = new Vector2(-MapWidth / 2 + +column * GridWidth, -MapHeight / 2 + MapHeight);
             Gizmos.DrawLine(from, to);
+        }
+
+        // Draw holder
+        foreach (var item in m_grid)
+        {
+            if (item.IsHolder)
+            {
+                Vector3 position = GetGridPosition(item.X, item.Y);
+                Gizmos.DrawIcon(position, "Holder.png", true);
+            }
+        }
+
+        // Draw navigation line
+        Gizmos.color = Color.red;
+        for (int i = 0; i < m_road.Count; i++)
+        {
+            if (i == 0)
+            {
+                Vector3 position = GetGridPosition(m_road[i].X, m_road[i].Y);
+                Gizmos.DrawIcon(position, "Spawn.png", true);
+            }
+            if (m_road.Count > 1 && i == m_road.Count - 1)
+            {
+                Vector3 position = GetGridPosition(m_road[i].X, m_road[i].Y);
+                Gizmos.DrawIcon(position, "Home.png", true);
+            }
+            if (m_road.Count > 1 && i != 0)
+            {
+                Vector3 from = GetGridPosition(m_road[i - 1].X, m_road[i - 1].Y);
+                Vector3 to = GetGridPosition(m_road[i].X, m_road[i].Y);
+                Gizmos.DrawLine(from, to);
+            }
         }
     }
 
