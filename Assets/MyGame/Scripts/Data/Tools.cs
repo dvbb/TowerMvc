@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Text;
 using System.Xml;
 using UnityEngine;
@@ -10,6 +11,7 @@ public static class Tools
 {
     public static void ParseXml(string fileName, ref Level level)
     {
+        level = new Level();
         FileInfo file = new FileInfo(fileName);
         StreamReader sr = new StreamReader(file.OpenRead(), Encoding.UTF8);
 
@@ -65,32 +67,34 @@ public static class Tools
         sb.AppendLine(string.Format("<InitScore>{0}</InitScore>", level.InitScore));
 
         // Holder
-        sb.AppendLine("Holder");
+        sb.AppendLine("<Holder>");
         foreach (var item in level.Holder)
         {
             sb.AppendLine($"<Point X=\"{item.X}\" Y=\"{item.Y}\"/>");
         }
-        sb.AppendLine("/Holder");
+        sb.AppendLine("</Holder>");
 
         // Path
-        sb.AppendLine("Path");
+        sb.AppendLine("<Path>");
         foreach (var item in level.Path)
         {
             sb.AppendLine($"<Point X=\"{item.X}\" Y=\"{item.Y}\"/>");
         }
-        sb.AppendLine("/Path");
+        sb.AppendLine("</Path>");
 
         // Rounds 
-        sb.AppendLine("Rounds");
+        sb.AppendLine("<Rounds>");
         foreach (var item in level.Rounds)
         {
             sb.AppendLine($"<Round Monster=\"{item.Monster}\" Count=\"{item.Count}\"/>");
         }
-        sb.AppendLine("/Rounds");
+        sb.AppendLine("</Rounds>");
 
         sb.AppendLine("</Level>");
 
         string content = sb.ToString();
+
+        Debug.Log(content);
 
         XmlWriterSettings settings = new XmlWriterSettings();
         settings.Indent = true;
@@ -102,7 +106,7 @@ public static class Tools
         XmlWriter writer = XmlWriter.Create(fileName, settings);
 
         XmlDocument document = new XmlDocument();
-        document.Load(content);
+        document.LoadXml(content);
         document.WriteTo(writer);
 
         writer.Close();
@@ -125,17 +129,40 @@ public static class Tools
         render.sprite = sp;
     }
 
-
     public static IEnumerator LoadImage(string url, SpriteRenderer render)
     {
-        Debug.Log(url);
         Texture2D texture = Resources.Load(url) as Texture2D;
         Sprite sp = Sprite.Create(
             texture,
             new Rect(0, 0, texture.width, texture.height),
-           new Vector2(.5f, .5f));
+            new Vector2(.5f, .5f));
         render.sprite = sp;
         //render.sprite = sprite;
         yield return .1f;
+    }
+
+    public static IEnumerator LoadImage(string url, SpriteRenderer render, float pixelsPerUnit)
+    {
+        Texture2D texture = Resources.Load(url) as Texture2D;
+        Sprite sp = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(.5f, .5f),
+            pixelsPerUnit);
+        render.sprite = sp;
+        //render.sprite = sprite;
+        yield return .1f;
+    }
+
+    public static List<FileInfo> GetLevelFiles()
+    {
+        string[] files = Directory.GetFiles(Consts.LevelDir, "*.xml");
+        List<FileInfo> list = new List<FileInfo>();
+        foreach (string file in files)
+        {
+            FileInfo fileInfo = new FileInfo(file);
+            list.Add(fileInfo);
+        }
+        return list;
     }
 }

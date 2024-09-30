@@ -1,25 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using static UnityEditor.Progress;
-
-public class Grid
-{
-    public int X;
-    public int Y;
-    public bool IsHolder;
-    public object Data;
-
-    public Grid(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
-}
 
 public class GridClickEventArgs : EventArgs
 {
@@ -44,7 +26,7 @@ public class Map : MonoBehaviour
 
     private Level m_level;
     private List<Grid> m_grid = new List<Grid>();
-    private List<Grid> m_road = new List<Grid>();
+    private List<Grid> m_path = new List<Grid>();
     #endregion
     public const int RowCount = 7;
     public const int ColCount = 12;
@@ -55,7 +37,7 @@ public class Map : MonoBehaviour
     public event EventHandler<GridClickEventArgs> onGridClicked;
 
     public Level Level { get { return m_level; } }
-    public List<Grid> Road { get { return m_road; } }
+    public List<Grid> Path { get { return m_path; } }
     public List<Grid> Grids { get { return m_grid; } }
 
     public string BackgroundImg
@@ -63,8 +45,7 @@ public class Map : MonoBehaviour
         set
         {
             SpriteRenderer render = transform.Find("Background").GetComponent<SpriteRenderer>();
-            if (render.sprite == null)
-                StartCoroutine(Tools.LoadImage(value, render));
+            StartCoroutine(Tools.LoadImage(value, render));
         }
     }
     public string RoadImg
@@ -72,21 +53,13 @@ public class Map : MonoBehaviour
         set
         {
             SpriteRenderer render = transform.Find("Road").GetComponent<SpriteRenderer>();
-            if (render.sprite == null)
-                StartCoroutine(Tools.LoadImage(value, render));
+            StartCoroutine(Tools.LoadImage(value, render, 45));
         }
     }
 
     private void Awake()
     {
         onGridClicked += OnGridClick;
-        for (int y = 0; y < RowCount; y++) // 7 row  0 < y < 7
-            for (int x = 0; x < ColCount; x++) // 12 column  0 < x < 12
-                m_grid.Add(new Grid(x, y)); //(0,0) (0,1) ... (0,11) (1,0) ... (7,0)
-
-        Level level = new Level();
-        Tools.ParseXml("D:\\repo\\TowerMvc\\Assets\\Resources\\UI\\Levels\\Level1.xml", ref level);
-        LoadLevel(level);
     }
 
     private void Update()
@@ -101,6 +74,16 @@ public class Map : MonoBehaviour
                     OnGridClick(this, arg);
             }
         }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Grid grid = GetGridByMouse();
+            if (grid != null)
+            {
+                GridClickEventArgs arg = new GridClickEventArgs(1, grid);
+                if (onGridClicked != null)
+                    OnGridClick(this, arg);
+            }
+        }
     }
 
     #region Data processing
@@ -108,25 +91,46 @@ public class Map : MonoBehaviour
     public void Clear()
     {
         m_level = null;
-        m_road.Clear();
+        ClearRoad();
+        ClearHolder();
+    }
+    public void ClearRoad() => m_path.Clear();
+
+    public void ClearHolder()
+    {
         foreach (Grid grid in m_grid)
         {
             grid.IsHolder = false;
         }
     }
 
+    public void Init()
+    {
+        m_grid.Clear();
+        m_path.Clear();
+
+        for (int y = 0; y < RowCount; y++) // 7 row  0 < y < 7
+            for (int x = 0; x < ColCount; x++) // 12 column  0 < x < 12
+                m_grid.Add(new Grid(x, y)); //(0,0) (0,1) ... (0,11) (1,0) ... (7,0)
+    }
+
     public void LoadLevel(Level level)
     {
-        Clear();
+        Init();
+
         this.m_level = level;
         this.BackgroundImg = "UI/Maps/" + level.Background;
         this.RoadImg = "UI/Maps/" + level.Road;
+
+        //Debug.Log("m_grid Count: " + m_grid.Count);
+        //Debug.Log("Path count: " + level.Path.Count);
+        //Debug.Log("Holder count: " + level.Holder.Count);
 
         for (int i = 0; i < level.Path.Count; i++)
         {
             Point point = level.Path[i];
             Grid grid = GetGrid(point.X, point.Y);
-            m_road.Add(grid);
+            m_path.Add(grid);
         }
         for (int i = 0; i < level.Holder.Count; i++)
         {
@@ -193,20 +197,19 @@ public class Map : MonoBehaviour
 
     private void OnGridClick(object sender, GridClickEventArgs args)
     {
-        if (gameObject.scene.name != "Map" || Level == null)
+        if (gameObject.scene.name != "MapBuilder" || Level == null)
             return;
 
         // Set Turret position
-        if (args.MouseBtnId == 0 && !m_road.Contains(args.Grid))
+        if (args.MouseBtnId == 0 && !m_path.Contains(args.Grid))
         {
-            Debug.Log(args.Grid.X + "," + args.Grid.Y);
             args.Grid.IsHolder = !args.Grid.IsHolder;
         }
 
         // Set Road
         if (args.MouseBtnId == 1 && !args.Grid.IsHolder)
         {
-
+            m_path.Add(args.Grid);
         }
     }
 
@@ -244,22 +247,22 @@ public class Map : MonoBehaviour
 
         // Draw navigation line
         Gizmos.color = Color.red;
-        for (int i = 0; i < m_road.Count; i++)
+        for (int i = 0; i < m_path.Count; i++)
         {
             if (i == 0)
             {
-                Vector3 position = GetGridPosition(m_road[i].X, m_road[i].Y);
+                Vector3 position = GetGridPosition(m_path[i].X, m_path[i].Y);
                 Gizmos.DrawIcon(position, "Spawn.png", true);
             }
-            if (m_road.Count > 1 && i == m_road.Count - 1)
+            if (m_path.Count > 1 && i == m_path.Count - 1)
             {
-                Vector3 position = GetGridPosition(m_road[i].X, m_road[i].Y);
+                Vector3 position = GetGridPosition(m_path[i].X, m_path[i].Y);
                 Gizmos.DrawIcon(position, "Home.png", true);
             }
-            if (m_road.Count > 1 && i != 0)
+            if (m_path.Count > 1 && i != 0)
             {
-                Vector3 from = GetGridPosition(m_road[i - 1].X, m_road[i - 1].Y);
-                Vector3 to = GetGridPosition(m_road[i].X, m_road[i].Y);
+                Vector3 from = GetGridPosition(m_path[i - 1].X, m_path[i - 1].Y);
+                Vector3 to = GetGridPosition(m_path[i].X, m_path[i].Y);
                 Gizmos.DrawLine(from, to);
             }
         }
