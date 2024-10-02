@@ -10,7 +10,7 @@ public class Game : ApplicationBase<Game>
 {
     // Global Access function
     public ObjectPollController ObjectPool;
-    public MusicController Controller;
+    public MusicController MusicController;
     public StaticData StaticData;
 
     // Global Function
@@ -34,6 +34,10 @@ public class Game : ApplicationBase<Game>
     protected override void Awake()
     {
         base.Awake();
+
+        ObjectPool = new ObjectPollController();
+        MusicController = new MusicController();
+        StaticData = new StaticData();
 
         DontDestroyOnLoad(this);
 
