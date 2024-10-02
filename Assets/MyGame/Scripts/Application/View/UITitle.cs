@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class UITitle : View
 {
@@ -14,4 +15,23 @@ public class UITitle : View
     {
         throw new NotImplementedException();
     }
+
+    #region Unity Button Click
+
+    public void OnStartClicked() => Game.Instance.LoadScene(2);
+    
+    public void OnContinueClicked()
+    {
+
+    }
+
+    public void OnSettingClicked()
+    {
+
+    }
+
+    public void OnExitClicked() => Application.Quit();
+
+    #endregion
+
 }
