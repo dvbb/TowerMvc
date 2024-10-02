@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Bullet : ReusableObject
+public class ExitSceneCommand : Controller
 {
-    public override void Spawn()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void UnSpawn()
+    public override void Execute(object obj)
     {
         throw new NotImplementedException();
     }

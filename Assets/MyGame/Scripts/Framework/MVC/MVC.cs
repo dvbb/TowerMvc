@@ -13,7 +13,18 @@ public static class MVC
 
     // Register
     public static void RegisterModel(Model model) => Models[model.Name] = model;
-    public static void RegisterView(View view) => Views[view.Name] = view;
+    public static void RegisterView(View view)
+    {
+        // Avoid register duplicate, remove [view]
+        if (Views.ContainsKey(view.Name))
+            Views.Remove(view.Name);
+
+        // Register event for [view]
+        view.RegisterEvents();
+
+        // Add [view] to [Views]
+        Views[view.Name] = view;
+    }
     public static void RegisterController(string eventName, Type controllerType) => CommondMap[eventName] = controllerType;
 
     // Get
@@ -40,7 +51,7 @@ public static class MVC
     // Send event
     public static void SendEvent(string eventName, object data = null)
     {
-        // Controller
+        // Controller response Event
         if (CommondMap.ContainsKey(eventName))
         {
             Type t = CommondMap[eventName];
@@ -49,7 +60,7 @@ public static class MVC
             c.Execute(data);
         }
 
-        // View response
+        // View response Event
         foreach (var view in Views.Values)
         {
             if (view.AttentionEvents.Contains(eventName))
