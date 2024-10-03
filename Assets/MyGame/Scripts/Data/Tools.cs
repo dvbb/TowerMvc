@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Xml;
@@ -164,5 +165,17 @@ public static class Tools
             list.Add(fileInfo);
         }
         return list;
+    }
+
+    public static FileInfo GetLevelFile(int index)
+    {
+        string[] files = Directory.GetFiles(Consts.LevelDir, "*.xml");
+        List<FileInfo> list = new List<FileInfo>();
+        foreach (string file in files)
+        {
+            FileInfo fileInfo = new FileInfo(file);
+            list.Add(fileInfo);
+        }
+        return list.FirstOrDefault(item => item.Name == $"Level{index}.xml");
     }
 }

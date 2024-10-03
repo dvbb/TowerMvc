@@ -18,7 +18,7 @@ public class UIMap : View
     {
         StartLevelArgs e = new StartLevelArgs()
         {
-            LevelID = 0,
+            LevelID = 1,
         };
         SendEvent(Consts.E_StartLevel, e);
     }

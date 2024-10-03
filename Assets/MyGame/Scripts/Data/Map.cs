@@ -60,6 +60,14 @@ public class Map : MonoBehaviour
     private void Awake()
     {
         onGridClicked += OnGridClick;
+
+        Debug.Log(LevelModel.Instance.LevelIndex);
+        Debug.Log(Tools.GetLevelFile(LevelModel.Instance.LevelIndex));
+        Debug.Log(Tools.GetLevelFile(LevelModel.Instance.LevelIndex).FullName);
+
+        string fileName = Tools.GetLevelFile(LevelModel.Instance.LevelIndex).FullName;
+        Tools.ParseXml(fileName, ref m_level);
+        LoadLevel(m_level);
     }
 
     private void Update()
