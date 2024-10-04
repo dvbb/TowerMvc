@@ -10,9 +10,9 @@ using UnityEngine.UIElements;
 
 public static class Tools
 {
-    public static void ParseXml(string fileName, ref Level level)
+    public static void ParseXml(string fileName, ref LevelInfo level)
     {
-        level = new Level();
+        level = new LevelInfo();
         FileInfo file = new FileInfo(fileName);
         StreamReader sr = new StreamReader(file.OpenRead(), Encoding.UTF8);
 
@@ -54,7 +54,7 @@ public static class Tools
         sr.Dispose();
     }
 
-    public static void SaveXml(string fileName, Level level)
+    public static void SaveXml(string fileName, LevelInfo level)
     {
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("<?xml version=\"1.0\"  encoding=\"utf-8\"?>");
@@ -114,21 +114,21 @@ public static class Tools
         writer.Dispose();
     }
 
-    public static IEnumerator LoadImageFromUrl(string url, SpriteRenderer render)
-    {
-        Debug.Log(url);
+    //public static IEnumerator LoadImageFromUrl(string url, SpriteRenderer render)
+    //{
+    //    Debug.Log(url);
 
-        WWW www = new WWW(url);
-        while (!www.isDone)
-            yield return www;
+    //    WWW www = new WWW(url);
+    //    while (!www.isDone)
+    //        yield return www;
 
-        Texture2D texture = www.texture;
-        Sprite sp = Sprite.Create(
-            texture,
-            new Rect(0, 0, texture.width, texture.height),
-           new Vector2(.5f, .5f));
-        render.sprite = sp;
-    }
+    //    Texture2D texture = www.texture;
+    //    Sprite sp = Sprite.Create(
+    //        texture,
+    //        new Rect(0, 0, texture.width, texture.height),
+    //       new Vector2(.5f, .5f));
+    //    render.sprite = sp;
+    //}
 
     public static IEnumerator LoadImage(string url, SpriteRenderer render)
     {

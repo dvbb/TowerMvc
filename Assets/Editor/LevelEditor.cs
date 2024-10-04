@@ -5,14 +5,14 @@ using Unity.Plastic.Antlr3.Runtime.Debug;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Map))]
-public class MapEditor : Editor
+[CustomEditor(typeof(Level))]
+public class LevelEditor : Editor
 {
     [HideInInspector]
-    private Map map = null;
+    private Level level = null;
     private List<FileInfo> m_files = new List<FileInfo>();
     private int m_selectedIndex = 0;
-    private Level level = new Level();
+    private LevelInfo levelinfo = new LevelInfo();
 
     private string selectedFileName;
 
@@ -20,7 +20,7 @@ public class MapEditor : Editor
     {
         base.OnInspectorGUI();
 
-        map = target as Map;
+        level = target as Level;
 
         // Init func
         EditorGUILayout.BeginHorizontal();
@@ -40,11 +40,11 @@ public class MapEditor : Editor
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Clear Holder"))
         {
-            map.ClearHolder();
+            level.ClearHolder();
         }
         if (GUILayout.Button("Clear Path"))
         {
-            map.ClearRoad();
+            level.ClearRoad();
         }
         EditorGUILayout.EndHorizontal();
 
@@ -79,27 +79,27 @@ public class MapEditor : Editor
         // Load
         FileInfo file = m_files[m_selectedIndex];
 
-        Tools.ParseXml(file.FullName, ref level);
+        Tools.ParseXml(file.FullName, ref levelinfo);
         selectedFileName = file.FullName;
-        map.LoadLevel(level);
+        level.LoadLevel(levelinfo);
     }
 
     private void SaveLevel()
     {
-        level.Path.Clear();
-        level.Holder.Clear();
+        levelinfo.Path.Clear();
+        levelinfo.Holder.Clear();
 
-        foreach (var item in map.Path)
+        foreach (var item in level.Path)
         {
-            level.Path.Add(new Point(item.X, item.Y));
+            levelinfo.Path.Add(new Point(item.X, item.Y));
         }
-        foreach (var item in map.Grids)
+        foreach (var item in level.Grids)
         {
             if (item.IsHolder)
-                level.Holder.Add(new Point(item.X, item.Y));
+                levelinfo.Holder.Add(new Point(item.X, item.Y));
         }
 
-        Tools.SaveXml(selectedFileName, level);
+        Tools.SaveXml(selectedFileName, levelinfo);
     }
 
     private string[] GetNames(List<FileInfo> files)

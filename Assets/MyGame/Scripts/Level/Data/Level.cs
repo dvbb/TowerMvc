@@ -15,7 +15,7 @@ public class GridClickEventArgs : EventArgs
     }
 }
 
-public class Map : MonoBehaviour
+public class Level : MonoBehaviour
 {
     #region Field
     private float MapWidth;
@@ -24,7 +24,7 @@ public class Map : MonoBehaviour
     private float GridWidth;
     private float GridHeight;
 
-    private Level m_level;
+    private LevelInfo m_level;
     private List<Grid> m_grid = new List<Grid>();
     private List<Grid> m_path = new List<Grid>();
     #endregion
@@ -36,7 +36,7 @@ public class Map : MonoBehaviour
 
     public event EventHandler<GridClickEventArgs> onGridClicked;
 
-    public Level Level { get { return m_level; } }
+    public LevelInfo LevelInfo { get { return m_level; } }
     public List<Grid> Path { get { return m_path; } }
     public List<Grid> Grids { get { return m_grid; } }
 
@@ -122,7 +122,7 @@ public class Map : MonoBehaviour
                 m_grid.Add(new Grid(x, y)); //(0,0) (0,1) ... (0,11) (1,0) ... (7,0)
     }
 
-    public void LoadLevel(Level level)
+    public void LoadLevel(LevelInfo level)
     {
         Init();
 
@@ -205,7 +205,7 @@ public class Map : MonoBehaviour
 
     private void OnGridClick(object sender, GridClickEventArgs args)
     {
-        if (gameObject.scene.name != "MapBuilder" || Level == null)
+        if (gameObject.scene.name != "MapBuilder" || LevelInfo == null)
             return;
 
         // Set Turret position

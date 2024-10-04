@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Level
+public class LevelInfo
 {
     public string Name;
     public string CardImage;
