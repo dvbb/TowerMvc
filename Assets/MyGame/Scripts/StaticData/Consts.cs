@@ -29,4 +29,10 @@ public class Consts
     public const string E_EndLevel = "E_EndLevel";//EndLevelArgs
 
     public const string E_LoadLevel = "E_LoadLevel";
+
+    public const string E_CardItemClick = "E_CardItemClick";
+    public const string E_CardSelect = "E_CardSelect";
+    public const string E_CardUnSelect = "E_CardUnSelect";
+
+
 }

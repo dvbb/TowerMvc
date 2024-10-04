@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CardModel
+public class Card
 {
     // Card Info
+    public int id;
     public string name;
     public int cost;
     public int atk;
