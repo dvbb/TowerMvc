@@ -16,8 +16,10 @@ public class Consts
     public const string V_Title = "V_Title";
     public const string V_Map = "V_Map";
     public const string V_Level = "V_Level";
+    public const string V_CardTable = "V_CardTable";
+    public const string V_CardShower = "V_CardShower";
 
-    //controller
+    // controller
     public const string E_StartUp = "E_StartUp";
 
     public const string E_EnterScene = "E_EnterScene"; //SceneArgs

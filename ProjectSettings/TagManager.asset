@@ -11,16 +11,16 @@ TagManager:
   - 
   - Water
   - UI
+  - Background
+  - Ground
   - 
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Turret
   - 
   - 
   - 
@@ -40,4 +40,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Backgourn
+    uniqueID: 2195402891
+    locked: 0
+  - name: Road
+    uniqueID: 1658737269
+    locked: 0
+  - name: Enemy
+    uniqueID: 2846060333
+    locked: 0
+  - name: Turret
+    uniqueID: 2382054811
+    locked: 0
+  - name: Bullet
+    uniqueID: 2392803417
+    locked: 0
+  - name: Card
+    uniqueID: 2691933623
     locked: 0

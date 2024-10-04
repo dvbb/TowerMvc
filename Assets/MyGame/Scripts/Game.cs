@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 
@@ -35,8 +36,17 @@ public class Game : ApplicationBase<Game>
     {
         base.Awake();
 
-        ObjectPool = new ObjectPollController();
-        MusicController = new MusicController();
+        // 1. Add new Components
+        // 1.1 Basic components
+        this.gameObject.AddComponent<ObjectPollController>();
+        this.gameObject.AddComponent<MusicController>();
+
+        // 1.3 Card
+
+        // 1.4 Data Persistency
+
+        ObjectPool = GetComponent<ObjectPollController>();
+        MusicController = GetComponent<MusicController>();
         StaticData = new StaticData();
 
         DontDestroyOnLoad(this);

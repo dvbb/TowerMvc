@@ -23,10 +23,11 @@ public class EnterSceneCommand : Controller
                 //GameObject.Find("Cancas").transform.Find("UILost").GetComponent<UIMap>();
                 break;
             case 3: // Level
-                RegisterView(GameObject.Find("Level").GetComponent<UILevel>());
+                RegisterView(GameObject.Find("UILevel").GetComponent<UILevel>());
+                RegisterView(GameObject.Find("UICardTable").GetComponent<UICardTable>());
+                RegisterView(GameObject.Find("UICardShower").GetComponent<UICardShower>());
                 break;
             case 4:
-
                 break;
             default:
                 break;
