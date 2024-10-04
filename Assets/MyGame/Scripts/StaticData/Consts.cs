@@ -13,14 +13,9 @@ public class Consts
     // model
 
     // view
-    public const string V_Start = "V_Start";
+    public const string V_Title = "V_Title";
     public const string V_Map = "V_Map";
-    public const string V_Board = "V_Board";
-    public const string V_CountDown = "V_CountDown";
-    public const string V_Win = "V_Win";
-    public const string V_Lost = "V_Lost";
-    public const string V_System = "V_System";
-    public const string V_Complete = "V_Complete";
+    public const string V_Level = "V_Level";
 
     //controller
     public const string E_StartUp = "E_StartUp";
@@ -31,5 +26,5 @@ public class Consts
     public const string E_StartLevel = "E_StartLevel";//StartLevelArgs
     public const string E_EndLevel = "E_EndLevel";//EndLevelArgs
 
-    public const string E_CountDownComplete = "E_CountDownComplete";
+    public const string E_LoadLevel = "E_LoadLevel";
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class UIMap : View
 {
-    public override string Name => throw new NotImplementedException();
+    public override string Name => Consts.V_Map;
 
     public void GotoMap()
     {
@@ -33,8 +33,5 @@ public class UIMap : View
     #endregion
 
     #region Unity Callback
-    #endregion
-
-    #region MyRegion
     #endregion
 }

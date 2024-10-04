@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UITitle : View
 {
-    public override string Name => throw new NotImplementedException();
+    public override string Name => Consts.V_Title;
 
     public void GotoMap()
     {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class GridClickEventArgs : EventArgs
 {
@@ -28,6 +27,7 @@ public class Level : MonoBehaviour
     private List<Grid> m_grid = new List<Grid>();
     private List<Grid> m_path = new List<Grid>();
     #endregion
+
     public const int RowCount = 7;
     public const int ColCount = 12;
     public const int TotalGrid = RowCount * ColCount;
@@ -60,10 +60,6 @@ public class Level : MonoBehaviour
     private void Awake()
     {
         onGridClicked += OnGridClick;
-
-        Debug.Log(LevelModel.Instance.LevelIndex);
-        Debug.Log(Tools.GetLevelFile(LevelModel.Instance.LevelIndex));
-        Debug.Log(Tools.GetLevelFile(LevelModel.Instance.LevelIndex).FullName);
 
         string fileName = Tools.GetLevelFile(LevelModel.Instance.LevelIndex).FullName;
         Tools.ParseXml(fileName, ref m_level);

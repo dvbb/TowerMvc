@@ -27,6 +27,5 @@ public abstract class View : MonoBehaviour
 
     public virtual void RegisterEvents()
     {
-
     }
 }

@@ -19,11 +19,11 @@ public class EnterSceneCommand : Controller
             case 1: // Title
                 break;
             case 2: // Map
-                //GameObject.Find("UIMap").GetComponent<UIMap>();
                 //GameObject.Find("Cancas").transform.Find("UIWin").GetComponent<UIMap>();
                 //GameObject.Find("Cancas").transform.Find("UILost").GetComponent<UIMap>();
                 break;
             case 3: // Level
+                RegisterView(GameObject.Find("Level").GetComponent<UILevel>());
                 break;
             case 4:
 
