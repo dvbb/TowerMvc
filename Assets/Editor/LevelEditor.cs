@@ -5,11 +5,11 @@ using Unity.Plastic.Antlr3.Runtime.Debug;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Level))]
+[CustomEditor(typeof(UILevel))]
 public class LevelEditor : Editor
 {
     [HideInInspector]
-    private Level level = null;
+    private UILevel level = null;
     private List<FileInfo> m_files = new List<FileInfo>();
     private int m_selectedIndex = 0;
     private LevelInfo levelinfo = new LevelInfo();
@@ -20,7 +20,7 @@ public class LevelEditor : Editor
     {
         base.OnInspectorGUI();
 
-        level = target as Level;
+        level = target as UILevel;
 
         // Init func
         EditorGUILayout.BeginHorizontal();
