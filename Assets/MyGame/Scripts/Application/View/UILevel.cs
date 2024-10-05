@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 public class GridClickEventArgs : EventArgs
 {
@@ -40,6 +42,7 @@ public class UILevel : View
     public LevelInfo LevelInfo { get { return m_level; } }
     public List<Grid> Path { get { return m_path; } }
     public List<Grid> Grids { get { return m_grid; } }
+    public List<GameObject> Nodes = new List<GameObject>();
 
     public string BackgroundImg
     {
@@ -134,6 +137,9 @@ public class UILevel : View
             if (grid != null)
                 grid.IsHolder = true;
         }
+
+        // Draw holder
+        GenerateNodes();
     }
 
     private Grid GetGrid(int x, int y)
@@ -193,12 +199,64 @@ public class UILevel : View
         return GetGrid(x, y);
     }
 
+    public void GenerateNodes()
+    {
+        if (gameObject.scene.name == "MapBuilder" || LevelInfo == null)
+            return;
+
+        var prefab = Resources.Load("Prefabs/Map/Node") as GameObject;
+        foreach (var item in m_grid)
+        {
+            if (item.IsHolder)
+            {
+                Vector3 position = GetGridPosition(item.X, item.Y);
+                var node = Instantiate(prefab, position, Quaternion.identity);
+                node.transform.SetParent(transform);
+                node.SetActive(false);
+                Nodes.Add(node);
+            }
+        }
+    }
+
+    public void ShowNodes()
+    {
+        foreach (var item in Nodes)
+        {
+            item.SetActive(true);
+        }
+    }
+
+    public void HideNodes()
+    {
+        foreach (var item in Nodes)
+        {
+            item.SetActive(false);
+        }
+    }
     #endregion
 
     #region Event Regresion
 
+    public override void RegisterEvents()
+    {
+        base.RegisterEvents();
+        AttentionEvents.Add(Consts.E_ShowNode);
+        AttentionEvents.Add(Consts.E_HideNode);
+    }
+
     public override void HandleEvent(string eventName, object obj)
     {
+        switch (eventName)
+        {
+            case Consts.E_ShowNode:
+                ShowNodes();
+                break;
+            case Consts.E_HideNode:
+                HideNodes();
+                break;
+            default:
+                break;
+        }
     }
 
     #endregion

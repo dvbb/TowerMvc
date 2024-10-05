@@ -60,6 +60,7 @@ public class UICardItem : View
         if (isSelected == true)
         {
             SendEvent(Consts.E_CardUnSelect);
+            SendEvent(Consts.E_HideNode);
             DisableSelect();
             return;
         }
@@ -69,6 +70,7 @@ public class UICardItem : View
         {
             CardId = card.id,
         };
+        SendEvent(Consts.E_ShowNode);
         SendEvent(Consts.E_Card, cardArgs);
         SendEvent(Consts.E_CardItemClick, card);
     }

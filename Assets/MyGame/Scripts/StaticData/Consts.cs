@@ -36,5 +36,6 @@ public class Consts
     public const string E_CardSelect = "E_CardSelect";
     public const string E_CardUnSelect = "E_CardUnSelect";
 
-
+    public const string E_ShowNode = "E_ShowNode";
+    public const string E_HideNode = "E_HideNode";
 }

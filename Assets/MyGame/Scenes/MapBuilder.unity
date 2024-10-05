@@ -122,81 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &114525426
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 114525427}
-  - component: {fileID: 114525429}
-  - component: {fileID: 114525428}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &114525427
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114525426}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 318416069}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &114525428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114525426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &114525429
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114525426}
-  m_CullTransparentMesh: 1
 --- !u!213 &183006970
 Sprite:
   m_ObjectHideFlags: 0
@@ -391,7 +316,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 504
-      _typelessdata: abaaba40b0053b4000000000e993ae405bb02540000000000bb6b040666666bf00000000b660db40287d324000000000e438de40065b10c000000000e438de408ee31840000000008988d8402ed822c000000000deddcd40b0053b4000000000faa4bf40721c27c000000000065b5040b0059bbf00000000f549df3f721c27c0000000009a993940398e633d00000000b660cb3f4a9ff43e00000000efeeae3fc1160cc0000000000bb6a03f7777b7bf00000000444484bf721c27c000000000abaa0ac0943ee93e00000000398e43c0398e63bd000000005555a5c0287d92bf000000001111c1c0b0053b40000000008ee3a8c04444244000000000176cd1c0721c27c0000000009ff4d9c0b0053b40000000001111e1c05bb02540000000001111e1c08ee318c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: abaaba40b0053b4000000000e993ae405bb02540000000000bb6b040666666bf00000000b660db40287d324000000000e438de40065b10c000000000e438de408ee31840000000008988d8402ed822c000000000deddcd40b0053b4000000000faa4bf40721c27c000000000065b5040b0059bbf00000000f549df3f721c27c0000000009a993940398e633d00000000b660cb3f4a9ff43e00000000efeeae3fc1160cc0000000000bb6a03f7777b7bf00000000444484bf721c27c000000000abaa0ac0943ee93e00000000398e43c0398e63bd000000005555a5c0287d92bf000000001111c1c0b0053b40000000008ee3a8c04444244000000000176cd1c0721c27c0000000009ff4d9c0b0053b40000000001111e1c05bb02540000000001111e1c08ee318c00000000000000000ac0c5f3f8d5d5f3fd8e4583fbd7c543feefa593fff41c53eafb46f3fa0035b3f7827713f5190593e7827713fd9f54d3fe7416e3f49da333e76d3683f8d5d5f3f8b95613f70262b3ef30b353facf3b03ea16c1c3f70262b3ed1402f3f23d0013fc2e3193f92970f3fcc44163f2d44623e5175143f9572a23e4853de3e70262b3e4d64b93eeadd0e3fa16c9c3eba5ffc3ed1402f3e994db53e8288ed3d8d5d5f3fe602283e15c3533f77e8aa3d70262b3ea825883d8d5d5f3ff95b563dbd7c543ff95b563d9d28483e
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -601,7 +526,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 104
-      _typelessdata: ec51f040295c87400000000014aeef40295c87c000000000ec51f04052b886c000000000ec51f0c0295c874000000000ec51f0c0295c87c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: ec51f040295c87400000000014aeef40295c87c000000000ec51f04052b886c000000000ec51f0c0295c874000000000ec51f0c0295c87c000000000000000000000803f0000803fbca87f3f000000000000803f73ee1a3b000000000000803f0000000000000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -710,8 +635,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 114525427}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -765,6 +689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316fe4ce3648e424eb51ddadfca10498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttentionEvents: []
+  Nodes: []
 --- !u!1 &739266471
 GameObject:
   m_ObjectHideFlags: 0
