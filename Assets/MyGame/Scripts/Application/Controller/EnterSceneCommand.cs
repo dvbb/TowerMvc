@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class EnterSceneCommand : Controller
 {
-    public override void Execute(object data    )
+    public override void Execute(object data)
     {
         SceneArgs e = (SceneArgs)data;
 
@@ -26,6 +26,7 @@ public class EnterSceneCommand : Controller
                 RegisterView(GameObject.Find("UILevel").GetComponent<UILevel>());
                 RegisterView(GameObject.Find("UICardTable").GetComponent<UICardTable>());
                 RegisterView(GameObject.Find("UICardShower").GetComponent<UICardShower>());
+                GameObject.Find("UICardShower").SetActive(false);
                 break;
             case 4:
                 break;

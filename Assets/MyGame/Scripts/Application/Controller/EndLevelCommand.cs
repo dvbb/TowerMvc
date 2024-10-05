@@ -5,6 +5,5 @@ public class EndLevelCommand : Controller
 {
     public override void Execute(object obj)
     {
-        throw new NotImplementedException();
     }
 }

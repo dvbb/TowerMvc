@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class ExitSceneCommand : Controller
+public class DeckModel : Singleton<DeckModel>
 {
-    public override void Execute(object obj)
-    {
-    }
+    public List<UICardItem> cardItems  = new List<UICardItem>();
 }

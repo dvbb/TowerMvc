@@ -16,4 +16,9 @@ public abstract class ApplicationBase<T> : MonoSingleton<T> where T : MonoSingle
     {
         MVC.SendEvent(eventName);
     }
+
+    protected void SendEvent(string eventName, object obj)
+    {
+        MVC.SendEvent(eventName, obj);
+    }
 }

@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 2209288569477558581}
   - component: {fileID: 519026173301585373}
   - component: {fileID: 6446090302456552760}
-  - component: {fileID: 4470305081096257071}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -256,19 +255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 519026173301585373}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &4470305081096257071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616402428676864223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46713e68cdcffcb4aba9305932d0a8ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls:
+      - m_Target: {fileID: 6142374441534616393}
+        m_TargetAssemblyTypeName: UICardItem, Assembly-CSharp
+        m_MethodName: OnCardItemClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3761759912174326899
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,12 +389,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8677163370066506863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ff13a037a871574194287f730e9d9df, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fa2f974e550eb84885da20cef8e9a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgPath: Characters\char_9
-  name: testName
-  cost: 200
-  atk: 50
-  aspd: 50
-  atkType: "\u7269\u7406"
+  AttentionEvents: []
+  button: {fileID: 6446090302456552760}
+  textMeshPro: {fileID: 8682732941714668069}
+  rectTransform: {fileID: 7140476558920563289}

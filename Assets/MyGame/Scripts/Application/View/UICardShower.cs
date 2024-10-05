@@ -8,27 +8,42 @@ using static UnityEditor.LightingExplorerTableColumn;
 public class UICardShower : View
 {
     #region Component
-    private Image image;
-    private TextMeshProUGUI TMP_ATK;
-    private TextMeshProUGUI TMP_ASPD;
-    private TextMeshProUGUI TMP_AtkType;
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI TMP_ATK;
+    [SerializeField] private TextMeshProUGUI TMP_ASPD;
+    [SerializeField] private TextMeshProUGUI TMP_AtkType;
     #endregion
     public override string Name => Consts.V_CardShower;
+
+    public override void RegisterEvents()
+    {
+        base.RegisterEvents();
+        AttentionEvents.Add(Consts.E_CardItemClick);
+        AttentionEvents.Add(Consts.E_CardUnSelect);
+    }
 
     public override void HandleEvent(string eventName, object obj)
     {
         switch (eventName)
         {
             case Consts.E_CardItemClick:
+                gameObject.SetActive(true);
                 var card = obj as Card;
                 image.sprite = Resources.Load<Sprite>(card.imgPath);
                 TMP_ATK.text = "攻击力: " + card.atk;
                 TMP_ASPD.text = "攻速: " + card.aspd;
                 TMP_AtkType.text = "伤害类型: " + card.atkType;
                 break;
+            case Consts.E_CardUnSelect:
+                gameObject.SetActive(false);
+                break;
             default:
                 break;
         }
+    }
+
+    private void Awake()
+    {
     }
 
     #region Method

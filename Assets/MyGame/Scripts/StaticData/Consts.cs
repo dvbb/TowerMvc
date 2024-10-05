@@ -18,6 +18,7 @@ public class Consts
     public const string V_Level = "V_Level";
     public const string V_CardTable = "V_CardTable";
     public const string V_CardShower = "V_CardShower";
+    public const string V_CardItem = "V_CardItem";
 
     // controller
     public const string E_StartUp = "E_StartUp";
@@ -30,6 +31,7 @@ public class Consts
 
     public const string E_LoadLevel = "E_LoadLevel";
 
+    public const string E_Card = "E_Card";
     public const string E_CardItemClick = "E_CardItemClick";
     public const string E_CardSelect = "E_CardSelect";
     public const string E_CardUnSelect = "E_CardUnSelect";
