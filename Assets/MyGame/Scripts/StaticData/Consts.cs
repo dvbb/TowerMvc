@@ -38,4 +38,8 @@ public class Consts
 
     public const string E_ShowNode = "E_ShowNode";
     public const string E_HideNode = "E_HideNode";
+
+    public const string E_StartCardDrag = "E_StartCardDrag";
+    public const string E_EndCardDrag = "E_EndCardDrag";
+
 }

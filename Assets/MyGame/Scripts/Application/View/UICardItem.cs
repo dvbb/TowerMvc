@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEditor.Profiling;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UICardItem : View
+public class UICardItem : View, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Card card { get; set; }
     public bool isSelected;
@@ -59,13 +60,24 @@ public class UICardItem : View
         // 1. Selected card is the same as current one
         if (isSelected == true)
         {
-            SendEvent(Consts.E_CardUnSelect);
-            SendEvent(Consts.E_HideNode);
-            DisableSelect();
+            UnSelectCard();
             return;
         }
 
         // 2. Selected card is not the same as current one
+        SelectCard();
+    }
+
+    private void UnSelectCard()
+    {
+        SendEvent(Consts.E_CardUnSelect);
+        SendEvent(Consts.E_HideNode);
+        DisableSelect();
+        return;
+    }
+
+    private void SelectCard()
+    {
         CardArgs cardArgs = new CardArgs()
         {
             CardId = card.id,
@@ -87,9 +99,26 @@ public class UICardItem : View
         rectTransform.transform.position -= new Vector3(0, 20);
     }
 
+
+
     #endregion
 
     #region Unity Callback
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        SelectCard();
+        SendEvent(Consts.E_StartCardDrag);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        UnSelectCard();
+        SendEvent(Consts.E_EndCardDrag);
+    }
 
     #endregion
 

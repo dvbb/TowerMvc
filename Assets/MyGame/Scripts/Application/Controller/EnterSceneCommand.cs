@@ -24,8 +24,8 @@ public class EnterSceneCommand : Controller
                 break;
             case 3: // Level
                 RegisterView(GameObject.Find("UILevel").GetComponent<UILevel>());
-                RegisterView(GameObject.Find("UICardTable").GetComponent<UICardTable>());
-                RegisterView(GameObject.Find("UICardShower").GetComponent<UICardShower>());
+                RegisterView(GameObject.Find("Canvas").transform.Find("UICardTable").GetComponent<UICardTable>());
+                RegisterView(GameObject.Find("Canvas").transform.Find("UICardShower").GetComponent<UICardShower>());
                 GameObject.Find("UICardShower").SetActive(false);
                 break;
             case 4:

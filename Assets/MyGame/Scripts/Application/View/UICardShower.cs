@@ -20,6 +20,8 @@ public class UICardShower : View
         base.RegisterEvents();
         AttentionEvents.Add(Consts.E_CardItemClick);
         AttentionEvents.Add(Consts.E_CardUnSelect);
+        AttentionEvents.Add(Consts.E_StartCardDrag);
+        AttentionEvents.Add(Consts.E_EndCardDrag);
     }
 
     public override void HandleEvent(string eventName, object obj)
@@ -36,6 +38,20 @@ public class UICardShower : View
                 break;
             case Consts.E_CardUnSelect:
                 gameObject.SetActive(false);
+                break;
+            case Consts.E_StartCardDrag:
+                {
+                    gameObject.SetActive(true);
+                    GetComponent<Image>().color = new Color(1, 1, 1, .1f);
+                    transform.position += new Vector3(-400, 0, 0);
+                }
+                break;
+            case Consts.E_EndCardDrag:
+                {
+                    gameObject.SetActive(false);
+                    GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                    transform.position += new Vector3(400, 0, 0);
+                }
                 break;
             default:
                 break;

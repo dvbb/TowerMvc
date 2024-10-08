@@ -12,7 +12,7 @@ public class CardCommand : Controller
         foreach (var cardItem in DeckModel.Instance.cardItems)
         {
             // 1. Show selected card
-            if (cardItem.card.id == args.CardId)
+            if (cardItem.card.id == args.CardId && !cardItem.isSelected)
             {
                 cardItem.EnableSelect();
             }
