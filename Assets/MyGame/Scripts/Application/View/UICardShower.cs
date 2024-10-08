@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -43,14 +44,17 @@ public class UICardShower : View
                 {
                     gameObject.SetActive(true);
                     GetComponent<Image>().color = new Color(1, 1, 1, .1f);
-                    transform.position += new Vector3(-400, 0, 0);
+                    RectTransform rectTransform = GetComponent<RectTransform>();
+                    rectTransform.position += new Vector3(-200, 0, 0);
+                    Debug.Log(transform.position);
                 }
                 break;
             case Consts.E_EndCardDrag:
                 {
                     gameObject.SetActive(false);
                     GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                    transform.position += new Vector3(400, 0, 0);
+                    RectTransform rectTransform = GetComponent<RectTransform>();
+                    rectTransform.position += new Vector3(200, 0, 0);
                 }
                 break;
             default:
@@ -62,7 +66,20 @@ public class UICardShower : View
     {
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1) && gameObject.activeSelf)
+        {
+            SendEvent(Consts.E_CardUnSelect);
+            SendEvent(Consts.E_HideNode);
+        }
+    }
+
     #region Method
+    public IEnumerator PanLeft()
+    {
+        yield return new WaitForSeconds(.1f);
+    }
 
     #endregion
 

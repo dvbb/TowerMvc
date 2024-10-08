@@ -22,22 +22,16 @@ public class UICardItem : View, IBeginDragHandler, IDragHandler, IEndDragHandler
 
     public override string Name => Consts.V_CardItem;
 
+    /// <summary>
+    /// CardItem not include in Views, so RegisterEvents() does not work
+    /// </summary>
+    public override void RegisterEvents()
+    {
+        base.RegisterEvents();
+    }
+
     public override void HandleEvent(string eventName, object obj)
     {
-        switch (eventName)
-        {
-            case Consts.E_Card:
-                var selectedCard = obj as Card;
-                Debug.Log("ecard" + card.id);
-                if (card.id != selectedCard.id && isSelected == true)
-                {
-                    rectTransform.transform.position -= new Vector3(0, 20);
-                    isSelected = false;
-                }
-                break;
-            default:
-                break;
-        }
     }
 
     private void Start()
@@ -72,7 +66,6 @@ public class UICardItem : View, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         SendEvent(Consts.E_CardUnSelect);
         SendEvent(Consts.E_HideNode);
-        DisableSelect();
         return;
     }
 
@@ -83,7 +76,7 @@ public class UICardItem : View, IBeginDragHandler, IDragHandler, IEndDragHandler
             CardId = card.id,
         };
         SendEvent(Consts.E_ShowNode);
-        SendEvent(Consts.E_Card, cardArgs);
+        SendEvent(Consts.E_CardSelect, cardArgs);
         SendEvent(Consts.E_CardItemClick, card);
     }
 
@@ -107,7 +100,7 @@ public class UICardItem : View, IBeginDragHandler, IDragHandler, IEndDragHandler
     public void OnBeginDrag(PointerEventData eventData)
     {
         SelectCard();
-        SendEvent(Consts.E_StartCardDrag);
+        SendEvent(Consts.E_StartCardDrag, card);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -119,6 +112,8 @@ public class UICardItem : View, IBeginDragHandler, IDragHandler, IEndDragHandler
         UnSelectCard();
         SendEvent(Consts.E_EndCardDrag);
     }
+
+
 
     #endregion
 

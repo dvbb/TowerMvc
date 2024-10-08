@@ -13,7 +13,8 @@ public class StartUpCommand : Controller
         RegisterController(Consts.E_StartLevel, typeof(StartLevelCommand));
         RegisterController(Consts.E_EndLevel, typeof(EndLevelCommand));
 
-        RegisterController(Consts.E_Card, typeof(CardCommand));
+        RegisterController(Consts.E_CardSelect, typeof(CardCommand));
+        RegisterController(Consts.E_CardUnSelect, typeof(CardCommand));
 
         // Enter game title
         Game.Instance.LoadScene(1);

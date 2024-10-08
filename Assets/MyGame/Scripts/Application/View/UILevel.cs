@@ -28,6 +28,10 @@ public class UILevel : View
     private LevelInfo m_level;
     private List<Grid> m_grid = new List<Grid>();
     private List<Grid> m_path = new List<Grid>();
+
+    // Drag
+    private bool isDragging;
+    private GameObject prefab;
     #endregion
     public override string Name => Consts.V_Level;
 
@@ -81,7 +85,14 @@ public class UILevel : View
     private void Update()
     {
         EditGrid();
+
+        if (isDragging && prefab != null)
+        {
+            var position = GetWorldPosition();
+            prefab.transform.position = position;
+        }
     }
+
 
 
     #region Data processing
@@ -189,6 +200,7 @@ public class UILevel : View
         // Screeen => Viewport => World
         Vector3 viewPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Vector3 worldPosition = Camera.main.ViewportToWorldPoint(viewPosition);
+        worldPosition.z = 0;
         return worldPosition;
     }
 
@@ -242,6 +254,8 @@ public class UILevel : View
         base.RegisterEvents();
         AttentionEvents.Add(Consts.E_ShowNode);
         AttentionEvents.Add(Consts.E_HideNode);
+        AttentionEvents.Add(Consts.E_StartCardDrag);
+        AttentionEvents.Add(Consts.E_EndCardDrag);
     }
 
     public override void HandleEvent(string eventName, object obj)
@@ -253,6 +267,30 @@ public class UILevel : View
                 break;
             case Consts.E_HideNode:
                 HideNodes();
+                break;
+            case Consts.E_StartCardDrag:
+                isDragging = true;
+                Card card = obj as Card;
+                prefab = Instantiate(Resources.Load(card.prefabPath) as GameObject);
+                break;
+            case Consts.E_EndCardDrag:
+                isDragging = false;
+
+                // prefab == null means that drag cancelled
+                if (prefab == null)
+                    return;
+
+                // Get prefab's grid
+                Grid grid = GetGridByWorldPosition(prefab.transform.position);
+                if (grid.IsHolder)
+                {
+                    prefab.transform.position = GetGridPosition(grid.X, grid.Y);
+                }
+                else
+                {
+                    Destroy(prefab);
+                }
+                prefab = null;
                 break;
             default:
                 break;

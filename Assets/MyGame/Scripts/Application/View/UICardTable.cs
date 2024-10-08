@@ -31,7 +31,7 @@ public class UICardTable : View
                 atk = Random.Range(100, 200),
                 aspd = Random.Range(50, 100),
                 atkType = Random.Range(0, 100) > 50 ? "物理" : "魔法",
-                prefabPath = "Turrets/archer_level_1",
+                prefabPath = "Prefabs/Turret/archer",
             };
             cardItem.Init(card);
             DeckModel.Instance.cardItems.Add(cardItem);

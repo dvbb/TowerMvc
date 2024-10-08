@@ -8,6 +8,19 @@ public class CardCommand : Controller
 {
     public override void Execute(object obj)
     {
+        // obj == null means that cancel select
+        if (obj == null)
+        {
+            foreach (var cardItem in DeckModel.Instance.cardItems)
+            {
+                if (cardItem.isSelected)
+                {
+                    cardItem.DisableSelect();
+                }
+            }
+            return;
+        }
+
         var args = obj as CardArgs;
         foreach (var cardItem in DeckModel.Instance.cardItems)
         {
