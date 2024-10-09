@@ -962,7 +962,6 @@ GameObject:
   - component: {fileID: 2088401174218197223}
   - component: {fileID: 7912791510664191285}
   - component: {fileID: 950697873013517762}
-  - component: {fileID: 6780579795232353701}
   - component: {fileID: 7912791510664191286}
   m_Layer: 5
   m_Name: UICardShower
@@ -1095,18 +1094,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6780579795232353701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3963713069098823617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7002906167296632996
 GameObject:
   m_ObjectHideFlags: 0

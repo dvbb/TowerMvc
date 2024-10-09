@@ -39,6 +39,9 @@ public class Game : ApplicationBase<Game>
     {
         base.Awake();
 
+        //TODO: SetResolution
+        Screen.SetResolution(1280, 1024, false);
+
         // 1. Add new Components
         // 1.1 Basic components
         this.gameObject.AddComponent<ObjectPollController>();

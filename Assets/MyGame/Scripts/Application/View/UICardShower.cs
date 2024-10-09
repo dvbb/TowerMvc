@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.LightingExplorerTableColumn;
 
 public class UICardShower : View
 {
@@ -46,7 +43,6 @@ public class UICardShower : View
                     GetComponent<Image>().color = new Color(1, 1, 1, .1f);
                     RectTransform rectTransform = GetComponent<RectTransform>();
                     rectTransform.position += new Vector3(-200, 0, 0);
-                    Debug.Log(transform.position);
                 }
                 break;
             case Consts.E_EndCardDrag:
