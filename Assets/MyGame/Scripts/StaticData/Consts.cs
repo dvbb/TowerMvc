@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Consts
 {
-    // direction
+    // Direction
     public static string MapDir = Application.dataPath + "/Resources/UI/Maps/";
     public static string LevelDir = Application.dataPath + "/Resources/UI/Levels/";
+
+    // UI Window
+    public const string W_ESC = "EscWindow";
 
     // save
 
@@ -21,13 +24,13 @@ public class Consts
     public const string V_CardItem = "V_CardItem";
 
     // controller
+    #region Scene
     public const string E_StartUp = "E_StartUp";
-
     public const string E_EnterScene = "E_EnterScene"; //SceneArgs
     public const string E_ExitScene = "E_ExitScene";//SceneArgs
-
-    public const string E_StartLevel = "E_StartLevel";//StartLevelArgs
-    public const string E_EndLevel = "E_EndLevel";//EndLevelArgs
+    public const string E_EnterLevel = "E_EnterLevel";//EnterLevelArgs
+    public const string E_ExitLevel = "E_ExitLevel";//ExitLevelArgs
+    #endregion
 
     public const string E_LoadLevel = "E_LoadLevel";
 
@@ -40,5 +43,7 @@ public class Consts
 
     public const string E_StartCardDrag = "E_StartCardDrag";
     public const string E_EndCardDrag = "E_EndCardDrag";
+
+    public const string E_UIWindow = "E_UIWindow";
 
 }

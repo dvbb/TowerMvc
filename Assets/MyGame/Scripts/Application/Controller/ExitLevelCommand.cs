@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class EndLevelCommand : Controller
+public class ExitLevelCommand : Controller
 {
     public override void Execute(object obj)
     {

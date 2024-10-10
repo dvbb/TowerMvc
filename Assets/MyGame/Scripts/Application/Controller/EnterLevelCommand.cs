@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartLevelCommand : Controller
+public class EnterLevelCommand : Controller
 {
     public override void Execute(object obj)
     {
-        StartLevelArgs args =  obj as StartLevelArgs;
+        EnterLevelArgs args =  obj as EnterLevelArgs;
 
         LevelModel.Instance.Init(args.LevelID);
 

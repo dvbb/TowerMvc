@@ -16,11 +16,11 @@ public class UIMap : View
     public void GotoStart() =>Game.Instance.LoadScene(1);
     public void ChooseLevel()
     {
-        StartLevelArgs e = new StartLevelArgs()
+        EnterLevelArgs e = new EnterLevelArgs()
         {
             LevelID = 1,
         };
-        SendEvent(Consts.E_StartLevel, e);
+        SendEvent(Consts.E_EnterLevel, e);
     }
     #endregion
 
