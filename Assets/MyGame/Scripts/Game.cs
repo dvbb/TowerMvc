@@ -40,7 +40,7 @@ public class Game : ApplicationBase<Game>
         base.Awake();
 
         //TODO: SetResolution
-        Screen.SetResolution(1280, 1024, false);
+        Screen.SetResolution(1920, 1080, true);
 
         // 1. Add new Components
         // 1.1 Basic components

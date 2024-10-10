@@ -54,6 +54,42 @@ public static class Tools
         sr.Dispose();
     }
 
+    public static void ParseXml(XmlDocument doc, ref LevelInfo level)
+    {
+        level = new LevelInfo();
+        level.Name = doc.SelectSingleNode("/Level/Name").InnerText;
+        level.CardImage = doc.SelectSingleNode("/Level/CardImage").InnerText;
+        level.Background = doc.SelectSingleNode("/Level/Background").InnerText;
+        level.Road = doc.SelectSingleNode("/Level/Road").InnerText;
+        level.InitScore = int.Parse(doc.SelectSingleNode("/Level/InitScore").InnerText);
+
+        XmlNodeList nodes;
+        nodes = doc.SelectNodes("/Level/Holder/Point");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            XmlNode node = nodes[i];
+            Point point = new Point(int.Parse(node.Attributes["X"].Value), int.Parse(node.Attributes["Y"].Value));
+            level.Holder.Add(point);
+        }
+
+        nodes = doc.SelectNodes("/Level/Path/Point");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            XmlNode node = nodes[i];
+            Point point = new Point(int.Parse(node.Attributes["X"].Value), int.Parse(node.Attributes["Y"].Value));
+            level.Path.Add(point);
+        }
+
+        nodes = doc.SelectNodes("/Level/Rounds/Round");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            XmlNode node = nodes[i];
+            Round round = new Round(int.Parse(node.Attributes["Monster"].Value), int.Parse(node.Attributes["Count"].Value));
+            level.Rounds.Add(round);
+        }
+    }
+
+
     public static void SaveXml(string fileName, LevelInfo level)
     {
         StringBuilder sb = new StringBuilder();

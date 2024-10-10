@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class GridClickEventArgs : EventArgs
 {
@@ -69,8 +71,12 @@ public class UILevel : View
 
         if (gameObject.scene.name != "MapBuilder")
         {
-            string fileName = Tools.GetLevelFile(LevelModel.Instance.LevelIndex).FullName;
-            Tools.ParseXml(fileName, ref m_level);
+            TextAsset XMLAsset = Resources.Load<TextAsset>($"UI/Levels/Level{LevelModel.Instance.LevelIndex}");
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(XMLAsset.text);
+
+            Tools.ParseXml(doc, ref m_level);
+
             LoadLevel(m_level);
         }
         else

@@ -42,7 +42,7 @@ public class UICardShower : View
                     gameObject.SetActive(true);
                     GetComponent<Image>().color = new Color(1, 1, 1, .1f);
                     RectTransform rectTransform = GetComponent<RectTransform>();
-                    rectTransform.position += new Vector3(-200, 0, 0);
+                    rectTransform.position += new Vector3(-Screen.width / 5, 0, 0);
                 }
                 break;
             case Consts.E_EndCardDrag:
@@ -50,7 +50,7 @@ public class UICardShower : View
                     gameObject.SetActive(false);
                     GetComponent<Image>().color = new Color(1, 1, 1, 1);
                     RectTransform rectTransform = GetComponent<RectTransform>();
-                    rectTransform.position += new Vector3(200, 0, 0);
+                    rectTransform.position += new Vector3(Screen.width / 5, 0, 0);
                 }
                 break;
             default:
