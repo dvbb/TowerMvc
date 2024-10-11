@@ -8,6 +8,11 @@ public class Consts
     public static string MapDir = Application.dataPath + "/Resources/UI/Maps/";
     public static string LevelDir = Application.dataPath + "/Resources/UI/Levels/";
 
+    // Key
+    public const string Key_Resolution = "Key_Resolution";
+    public const string Key_BgmValue = "Key_BgmValue";
+    public const string Key_SeValue = "Key_SeValue";
+
     // UI Window
     public const string W_ESC = "EscWindow";
 

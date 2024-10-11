@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
@@ -42,9 +43,7 @@ public class Game : ApplicationBase<Game>
     protected override void Awake()
     {
         base.Awake();
-
-        //TODO: SetResolution
-        Screen.SetResolution(1920, 1080, true);
+        DontDestroyOnLoad(this);
 
         // 1. Add new Components
         // 1.1 Basic components
@@ -55,11 +54,14 @@ public class Game : ApplicationBase<Game>
 
         // 1.4 Data Persistency
 
+        // Init components
+        StaticData = new StaticData();
         ObjectPool = GetComponent<ObjectPollController>();
         MusicController = GetComponent<MusicManager>();
-        StaticData = new StaticData();
+        MusicManager.Instance.PlayMusic(MusicEnum.MusicType_Main.Forever);
 
-        DontDestroyOnLoad(this);
+        // Init Static data
+        StaticData.Instance.SetResolution();
 
         // Establish mapping relationship
         RegisterController(Consts.E_StartUp, typeof(StartUpCommand));

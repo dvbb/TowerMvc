@@ -5,16 +5,6 @@ public class MusicManager : MonoSingleton<MusicManager>
     private AudioSource audio_music;
     private AudioSource audio_effect;
 
-    public float Music_Volume
-    {
-        get { return audio_music.volume; }
-        set { audio_music.volume = value; }
-    }
-    public float Effect_Volume
-    {
-        get { return audio_effect.volume; }
-        set { audio_effect.volume = value; }
-    }
     protected override void Awake()
     {
         base.Awake();
@@ -22,11 +12,25 @@ public class MusicManager : MonoSingleton<MusicManager>
         audio_music = gameObject.AddComponent<AudioSource>();
         audio_music.loop = true;
         audio_music.playOnAwake = true;
+        audio_music.volume = StaticData.Instance.LoadBgmValue();
 
         // Init effect audio
         audio_effect = gameObject.AddComponent<AudioSource>();
         audio_effect.loop = false;
         audio_effect.playOnAwake = false;
+        audio_effect.volume = StaticData.Instance.LoadSeValue();
+    }
+
+    public void SetBgmValue(float value)
+    {
+        audio_music.volume = value;
+        StaticData.Instance.SaveBgmValue(value);
+    }
+
+    public void SetSeValue(float value)
+    {
+        audio_effect.volume = value;
+        StaticData.Instance.SaveSeValue(value);
     }
 
     /// <summary>

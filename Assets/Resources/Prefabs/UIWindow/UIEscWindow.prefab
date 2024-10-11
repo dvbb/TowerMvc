@@ -470,10 +470,10 @@ RectTransform:
   - {fileID: 281475064429962022}
   m_Father: {fileID: 8172305134495412140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360, y: -550}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7569125398739821248
 CanvasRenderer:
@@ -602,7 +602,7 @@ RectTransform:
   m_Father: {fileID: 3103515137193557499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.714, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1116,10 +1116,10 @@ RectTransform:
   - {fileID: 8624168173459771456}
   m_Father: {fileID: 8172305134495412140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360, y: -205}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4972458919277646652
 CanvasRenderer:
@@ -1532,7 +1532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8172305134495412140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1894,7 +1894,7 @@ RectTransform:
   m_Father: {fileID: 2635294547321766649}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.714, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1968,8 +1968,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6045595305576230169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.714, y: 0}
-  m_AnchorMax: {x: 0.714, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2156,10 +2156,10 @@ RectTransform:
   - {fileID: 1459173958954668007}
   m_Father: {fileID: 8172305134495412140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360, y: -320}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8253433953668494527
 CanvasRenderer:
@@ -2345,9 +2345,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EscSceneManager, Assembly-CSharp
-        m_MethodName: OnSeSliderValueChanged
+      - m_Target: {fileID: 5836883355218585492}
+        m_TargetAssemblyTypeName: UIEscWindow, Assembly-CSharp
+        m_MethodName: OnSeSliderChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2374,7 +2374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6701079167935968426
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2604,10 +2604,10 @@ RectTransform:
   - {fileID: 5488422915902279881}
   m_Father: {fileID: 8172305134495412140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360, y: -435}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &329267346441233408
 CanvasRenderer:
@@ -2868,8 +2868,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6834073236038630589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.714, y: 0}
-  m_AnchorMax: {x: 0.714, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3071,10 +3071,10 @@ RectTransform:
   - {fileID: 2322413037650565099}
   m_Father: {fileID: 8172305134495412140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360, y: -90}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9100005291372249626
 CanvasRenderer:
@@ -3269,7 +3269,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6317764035643157224}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3360,8 +3360,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttentionEvents: []
+  Mask: {fileID: 9142843898086276641}
   MainWindow: {fileID: 3727982962371821679}
   SettingWindow: {fileID: 4982861999264987292}
+  ResolutionDropdown: {fileID: 3546550304376581340}
+  BgmSlider: {fileID: 7707211010013673112}
+  SeSlider: {fileID: 4631452179353628388}
 --- !u!1 &6458008450152487068
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,9 +4303,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EscSceneManager, Assembly-CSharp
-        m_MethodName: OnBgmSliderValueChanged
+      - m_Target: {fileID: 5836883355218585492}
+        m_TargetAssemblyTypeName: UIEscWindow, Assembly-CSharp
+        m_MethodName: OnBgmSliderChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4453,9 +4457,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EscSceneManager, Assembly-CSharp
-        m_MethodName: OnResolutionRadioChanged
+      - m_Target: {fileID: 5836883355218585492}
+        m_TargetAssemblyTypeName: UIEscWindow, Assembly-CSharp
+        m_MethodName: OnResolutionChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

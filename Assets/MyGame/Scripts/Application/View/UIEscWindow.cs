@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIEscWindow : View
 {
-    [SerializeField] GameObject Mask;
-    [SerializeField] GameObject MainWindow;
-    [SerializeField] GameObject SettingWindow;
+    [Header("Panels")]
+    [SerializeField] private GameObject Mask;
+    [SerializeField] private GameObject MainWindow;
+    [SerializeField] private GameObject SettingWindow;
+
+    [Header("UI_Components")]
+    [SerializeField] private TMP_Dropdown ResolutionDropdown;
+    [SerializeField] private Slider BgmSlider;
+    [SerializeField] private Slider SeSlider;
 
     public override string Name => Consts.V_EscWindow;
     private bool isOpen;
@@ -43,6 +50,13 @@ public class UIEscWindow : View
         ResetWindowState();
     }
 
+    private void Update()
+    {
+        Debug.Log(BgmSlider.value);
+        Debug.Log(SeSlider.value);
+        Debug.Log(ResolutionDropdown.value);
+    }
+
     #region Click Method
 
     public void OnContinueClicked()
@@ -70,6 +84,22 @@ public class UIEscWindow : View
     {
         Application.Quit();
     }
+
+    public void OnBgmSliderChanged()
+    {
+        MusicManager.Instance.SetBgmValue(BgmSlider.value);
+    }
+
+    public void OnSeSliderChanged()
+    {
+        MusicManager.Instance.SetSeValue(SeSlider.value);
+    }
+
+    public void OnResolutionChanged()
+    {
+        StaticData.Instance.SetResolution(ResolutionDropdown.value);
+    }
+
     #endregion
 
     #region Method
@@ -83,6 +113,7 @@ public class UIEscWindow : View
 
     private void OpenMainWindow()
     {
+        isOpen = true;
         Mask.SetActive(true);
         MainWindow.SetActive(true);
         SettingWindow.SetActive(false);
