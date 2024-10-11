@@ -5,5 +5,6 @@ public class ExitLevelCommand : Controller
 {
     public override void Execute(object obj)
     {
+        DeckModel.Instance.cardItems.Clear();
     }
 }

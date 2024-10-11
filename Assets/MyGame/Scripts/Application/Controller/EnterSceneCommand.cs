@@ -21,11 +21,13 @@ public class EnterSceneCommand : Controller
             case 2: // Map
                 //GameObject.Find("Cancas").transform.Find("UIWin").GetComponent<UIMap>();
                 //GameObject.Find("Cancas").transform.Find("UILost").GetComponent<UIMap>();
+                //RegisterView(GameObject.Find("Canvas").transform.Find("UIEscWindow").GetComponent<UIEscWindow>());
                 break;
             case 3: // Level
                 RegisterView(GameObject.Find("UILevel").GetComponent<UILevel>());
                 RegisterView(GameObject.Find("Canvas").transform.Find("UICardTable").GetComponent<UICardTable>());
                 RegisterView(GameObject.Find("Canvas").transform.Find("UICardShower").GetComponent<UICardShower>());
+                RegisterView(GameObject.Find("Canvas").transform.Find("UIEscWindow").GetComponent<UIEscWindow>());
                 GameObject.Find("UICardShower").SetActive(false);
                 break;
             case 4:

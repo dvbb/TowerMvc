@@ -11,7 +11,7 @@ public class Game : ApplicationBase<Game>
 {
     // Global Access function
     public ObjectPollController ObjectPool;
-    public MusicController MusicController;
+    public MusicManager MusicController;
     public StaticData StaticData;
 
     // Global Function
@@ -20,6 +20,10 @@ public class Game : ApplicationBase<Game>
         // Exist current scene
         SceneArgs e = new SceneArgs();
         e.SceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (e.SceneIndex == 3)
+        {
+            SendEvent(Consts.E_ExitLevel);
+        }
         SendEvent(Consts.E_ExitScene, e);
 
         // Enter new scene
@@ -45,14 +49,14 @@ public class Game : ApplicationBase<Game>
         // 1. Add new Components
         // 1.1 Basic components
         this.gameObject.AddComponent<ObjectPollController>();
-        this.gameObject.AddComponent<MusicController>();
+        this.gameObject.AddComponent<MusicManager>();
 
         // 1.3 Card
 
         // 1.4 Data Persistency
 
         ObjectPool = GetComponent<ObjectPollController>();
-        MusicController = GetComponent<MusicController>();
+        MusicController = GetComponent<MusicManager>();
         StaticData = new StaticData();
 
         DontDestroyOnLoad(this);

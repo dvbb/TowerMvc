@@ -90,6 +90,16 @@ public class UILevel : View
     {
         EditGrid();
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //UIWindowArgs args = new UIWindowArgs()
+            //{
+            //    Index = WindowCode.ESC
+            //};
+            //SendEvent(Consts.E_UIWindow, args);
+            SendEvent(Consts.V_EscWindow);
+        }
+
         if (isDragging && prefab != null)
         {
             var position = GetWorldPosition();

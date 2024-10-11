@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MusicController : MonoSingleton<MusicController>
+public class MusicManager : MonoSingleton<MusicManager>
 {
     private AudioSource audio_music;
     private AudioSource audio_effect;
