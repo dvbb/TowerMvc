@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.X86.Avx;
+using static UnityEditor.Progress;
 
 public class GridClickEventArgs : EventArgs
 {
@@ -33,6 +34,7 @@ public class UILevel : View
     private bool isDragging;
     private GameObject prefab;
     #endregion
+
     public override string Name => Consts.V_Level;
 
     public const int RowCount = 7;
@@ -43,10 +45,9 @@ public class UILevel : View
 
     public event EventHandler<GridClickEventArgs> onGridClicked;
 
-    public LevelInfo LevelInfo { get { return m_level; } }
     public List<Grid> Path { get { return m_path; } }
     public List<Grid> Grids { get { return m_grid; } }
-    public List<GameObject> Nodes = new List<GameObject>();
+    public List<Node> Nodes = new List<Node>();
 
     public string BackgroundImg
     {
@@ -227,7 +228,7 @@ public class UILevel : View
 
     public void GenerateNodes()
     {
-        if (gameObject.scene.name == "MapBuilder" || LevelInfo == null)
+        if (gameObject.scene.name == "MapBuilder" || m_level == null)
             return;
 
         var prefab = Resources.Load("Prefabs/Map/Node") as GameObject;
@@ -236,9 +237,10 @@ public class UILevel : View
             if (item.IsHolder)
             {
                 Vector3 position = GetGridPosition(item.X, item.Y);
-                var node = Instantiate(prefab, position, Quaternion.identity);
-                node.transform.SetParent(transform);
-                node.SetActive(false);
+                var obj = Instantiate(prefab, position, Quaternion.identity);
+                obj.transform.SetParent(transform);
+                obj.SetActive(false);
+                Node node = new Node(item.X, item.Y, obj);
                 Nodes.Add(node);
             }
         }
@@ -246,18 +248,31 @@ public class UILevel : View
 
     public void ShowNodes()
     {
-        foreach (var item in Nodes)
+        foreach (var node in Nodes)
         {
-            item.SetActive(true);
+            if (!node.isDeploy)
+            {
+                node.prefab.SetActive(true);
+            }
         }
     }
 
     public void HideNodes()
     {
-        foreach (var item in Nodes)
+        foreach (var node in Nodes)
         {
-            item.SetActive(false);
+            node.prefab.SetActive(false);
         }
+    }
+
+    public Node GetNodeByAxis(int x, int y)
+    {
+        foreach(var node in Nodes)
+        {
+            if (node.X == x && node.Y == y)
+                return node;
+        }
+        return null;
     }
     #endregion
 
@@ -296,8 +311,11 @@ public class UILevel : View
 
                 // Get prefab's grid
                 Grid grid = GetGridByWorldPosition(prefab.transform.position);
+                Node node = GetNodeByAxis(grid.X, grid.Y);
                 if (grid.IsHolder)
                 {
+                    grid.IsHolder = false;
+                    node.isDeploy = true;
                     prefab.transform.position = GetGridPosition(grid.X, grid.Y);
                 }
                 else
@@ -380,7 +398,7 @@ public class UILevel : View
 
     private void EditGrid()
     {
-        if (gameObject.scene.name != "MapBuilder" || LevelInfo == null)
+        if (gameObject.scene.name != "MapBuilder" || m_level == null)
             return;
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
