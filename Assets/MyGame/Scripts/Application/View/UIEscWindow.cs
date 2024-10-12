@@ -52,9 +52,6 @@ public class UIEscWindow : View
 
     private void Update()
     {
-        Debug.Log(BgmSlider.value);
-        Debug.Log(SeSlider.value);
-        Debug.Log(ResolutionDropdown.value);
     }
 
     #region Click Method

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static Unity.Burst.Intrinsics.X86.Avx;
 using static UnityEditor.Progress;
 
@@ -32,7 +33,11 @@ public class UILevel : View
 
     // Drag
     private bool isDragging;
+    private Card draggedCard;
     private GameObject prefab;
+
+    // Node Select
+    private bool isTurretSelected;
     #endregion
 
     public override string Name => Consts.V_Level;
@@ -90,6 +95,22 @@ public class UILevel : View
     private void Update()
     {
         EditGrid();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Node node = GetNodeByMouse();
+            if (node == null || node.Turret == null || isTurretSelected)
+                return;
+
+            if (node.Turret.isSelected)
+            {
+                node.Turret.DisableSelect();
+            }
+            else
+            {
+                node.Turret.Select();
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -210,6 +231,14 @@ public class UILevel : View
         return grid;
     }
 
+    private Node GetNodeByMouse()
+    {
+        Vector3 worldPosition = GetWorldPosition();
+        int x = (int)((worldPosition.x + MapWidth / 2) / GridWidth);
+        int y = (int)((worldPosition.y + MapHeight / 2) / GridHeight);
+        return GetNodeByAxis(x, y); ;
+    }
+
     private Vector3 GetWorldPosition()
     {
         // Screeen => Viewport => World
@@ -252,7 +281,7 @@ public class UILevel : View
         {
             if (!node.isDeploy)
             {
-                node.prefab.SetActive(true);
+                node.nodePrefab.SetActive(true);
             }
         }
     }
@@ -261,13 +290,13 @@ public class UILevel : View
     {
         foreach (var node in Nodes)
         {
-            node.prefab.SetActive(false);
+            node.nodePrefab.SetActive(false);
         }
     }
 
     public Node GetNodeByAxis(int x, int y)
     {
-        foreach(var node in Nodes)
+        foreach (var node in Nodes)
         {
             if (node.X == x && node.Y == y)
                 return node;
@@ -285,6 +314,8 @@ public class UILevel : View
         AttentionEvents.Add(Consts.E_HideNode);
         AttentionEvents.Add(Consts.E_StartCardDrag);
         AttentionEvents.Add(Consts.E_EndCardDrag);
+        AttentionEvents.Add(Consts.E_CardItemClick);
+        AttentionEvents.Add(Consts.E_CardUnSelect);
     }
 
     public override void HandleEvent(string eventName, object obj)
@@ -299,14 +330,14 @@ public class UILevel : View
                 break;
             case Consts.E_StartCardDrag:
                 isDragging = true;
-                Card card = obj as Card;
-                prefab = Instantiate(Resources.Load(card.prefabPath) as GameObject);
+                draggedCard = obj as Card;
+                prefab = Instantiate(Resources.Load(draggedCard.prefabPath) as GameObject);
                 break;
             case Consts.E_EndCardDrag:
                 isDragging = false;
 
                 // prefab == null means that drag cancelled
-                if (prefab == null)
+                if (prefab == null || draggedCard == null)
                     return;
 
                 // Get prefab's grid
@@ -316,6 +347,9 @@ public class UILevel : View
                 {
                     grid.IsHolder = false;
                     node.isDeploy = true;
+                    node.Turret = prefab.GetComponent<TurretBase>();
+                    node.Turret.card = draggedCard;
+                    node.Turret.DisableSelect();
                     prefab.transform.position = GetGridPosition(grid.X, grid.Y);
                 }
                 else
@@ -323,6 +357,12 @@ public class UILevel : View
                     Destroy(prefab);
                 }
                 prefab = null;
+                break;
+            case Consts.E_CardItemClick:
+                isTurretSelected = true;
+                break;
+            case Consts.E_CardUnSelect:
+                isTurretSelected = false;
                 break;
             default:
                 break;
