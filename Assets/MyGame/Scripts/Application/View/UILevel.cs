@@ -99,16 +99,17 @@ public class UILevel : View
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Node node = GetNodeByMouse();
-            if (node == null || node.Turret == null || isTurretSelected)
+            if (node == null || node.Turret == null)
                 return;
 
             if (node.Turret.isSelected)
             {
-                node.Turret.DisableSelect();
+                ShowerModel.Instance.ChangeSelectTurret();
             }
             else
             {
                 node.Turret.Select();
+                ShowerModel.Instance.ChangeSelectTurret(node.Turret);
             }
         }
 
@@ -363,6 +364,7 @@ public class UILevel : View
                 break;
             case Consts.E_CardUnSelect:
                 isTurretSelected = false;
+                ShowerModel.Instance.ChangeSelectTurret();
                 break;
             default:
                 break;

@@ -28,23 +28,8 @@ public class TurretBase : View
 
     public override string Name => "TurretBase";
 
-    public override void RegisterEvents()
-    {
-        base.RegisterEvents();
-        AttentionEvents.Add(Consts.E_CardUnSelect);
-    }
-
     public override void HandleEvent(string eventName, object obj)
     {
-        switch (eventName)
-        {
-            case Consts.E_CardUnSelect:
-                isSelected = false;
-                AttackRangeShower.SetActive(false);
-                break;
-            default:
-                break;
-        }
     }
 
     private void Awake()
@@ -58,6 +43,9 @@ public class TurretBase : View
     {
         isSelected = true;
         AttackRangeShower.SetActive(true);
+        SendEvent(Consts.E_CardUnSelect);
+        SendEvent(Consts.E_HideNode);
+
         SendEvent(Consts.E_CardItemClick, card);
     }
 
@@ -65,7 +53,6 @@ public class TurretBase : View
     {
         isSelected = false;
         AttackRangeShower.SetActive(false);
-        SendEvent(Consts.E_CardUnSelect);
     }
 
     #endregion

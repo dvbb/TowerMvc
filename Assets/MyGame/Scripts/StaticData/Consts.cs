@@ -51,5 +51,4 @@ public class Consts
     public const string E_EndCardDrag = "E_EndCardDrag";
 
     public const string E_UIWindow = "E_UIWindow";
-
 }

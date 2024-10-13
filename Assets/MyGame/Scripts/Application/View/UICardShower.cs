@@ -27,6 +27,10 @@ public class UICardShower : View
         switch (eventName)
         {
             case Consts.E_CardItemClick:
+                // disable turret select
+                ShowerModel.Instance.ChangeSelectTurret();
+
+                // show new card
                 gameObject.SetActive(true);
                 var card = obj as Card;
                 image.sprite = Resources.Load<Sprite>(card.imgPath);
@@ -39,6 +43,8 @@ public class UICardShower : View
                 break;
             case Consts.E_StartCardDrag:
                 {
+                    StateModel.Instance.state = StateEnum.Drag;
+
                     gameObject.SetActive(true);
                     GetComponent<Image>().color = new Color(1, 1, 1, .1f);
                     RectTransform rectTransform = GetComponent<RectTransform>();
@@ -47,6 +53,8 @@ public class UICardShower : View
                 break;
             case Consts.E_EndCardDrag:
                 {
+                    StateModel.Instance.state = StateEnum.Normal;
+
                     gameObject.SetActive(false);
                     GetComponent<Image>().color = new Color(1, 1, 1, 1);
                     RectTransform rectTransform = GetComponent<RectTransform>();
@@ -64,7 +72,7 @@ public class UICardShower : View
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && gameObject.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && gameObject.activeSelf && StateModel.Instance.state != StateEnum.Drag)
         {
             SendEvent(Consts.E_CardUnSelect);
             SendEvent(Consts.E_HideNode);
