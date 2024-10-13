@@ -77,13 +77,17 @@ public class UILevel : View
 
         if (gameObject.scene.name != "MapBuilder")
         {
-            TextAsset XMLAsset = Resources.Load<TextAsset>($"UI/Levels/Level{LevelModel.Instance.LevelIndex}");
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(XMLAsset.text);
-
-            Tools.ParseXml(doc, ref m_level);
-
+            m_level = LevelModel.Instance.levelInfo;
             LoadLevel(m_level);
+
+            // Init LevelModel's waypoint
+            List<Vector3> waypoints = new List<Vector3>();
+            foreach (var waypoint in m_path)
+            {
+                waypoints.Add(GetWorldPosition(waypoint.X, waypoint.Y));
+            }
+            LevelModel.Instance.waypoints = waypoints.ToArray();
+
         }
         else
         {
@@ -125,7 +129,7 @@ public class UILevel : View
 
         if (isDragging && prefab != null)
         {
-            var position = GetWorldPosition();
+            var position = GetWorldPositionByMouse();
             prefab.transform.position = position;
         }
     }
@@ -227,20 +231,20 @@ public class UILevel : View
 
     private Grid GetGridByMouse()
     {
-        Vector3 worldPosition = GetWorldPosition();
+        Vector3 worldPosition = GetWorldPositionByMouse();
         Grid grid = GetGridByWorldPosition(worldPosition);
         return grid;
     }
 
     private Node GetNodeByMouse()
     {
-        Vector3 worldPosition = GetWorldPosition();
+        Vector3 worldPosition = GetWorldPositionByMouse();
         int x = (int)((worldPosition.x + MapWidth / 2) / GridWidth);
         int y = (int)((worldPosition.y + MapHeight / 2) / GridHeight);
         return GetNodeByAxis(x, y); ;
     }
 
-    private Vector3 GetWorldPosition()
+    private Vector3 GetWorldPositionByMouse()
     {
         // Screeen => Viewport => World
         Vector3 viewPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -254,6 +258,11 @@ public class UILevel : View
         int x = (int)((worldPosition.x + MapWidth / 2) / GridWidth);
         int y = (int)((worldPosition.y + MapHeight / 2) / GridHeight);
         return GetGrid(x, y);
+    }
+
+    private Vector3 GetWorldPosition(int x, int y)
+    {
+        return new Vector3(GridWidth * x, GridHeight * y, 0) + gridOffSet + mapZeorVector;
     }
 
     public void GenerateNodes()
