@@ -11,8 +11,11 @@ public class UIInfoWindow : View
     private int currentSpeed;
 
     // components
-    private TextMeshProUGUI text_SpeedButton;
-    private Image image_StartButton;
+    [SerializeField] private TextMeshProUGUI text_Speed;
+    [SerializeField] private TextMeshProUGUI text_Goal;
+    [SerializeField] private TextMeshProUGUI text_Health;
+    [SerializeField] private TextMeshProUGUI text_Coin;
+    [SerializeField] private Image image_StartButton;
 
     // stored image
     private Sprite icon_start;
@@ -37,8 +40,8 @@ public class UIInfoWindow : View
         icon_stop = Resources.Load<Sprite>("UI/Scenes/Icons/GUI_34");
 
         // Get Components
-        image_StartButton = gameObject.GetComponentInChildren<Image>();
-        text_SpeedButton = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        //image_StartButton = gameObject.GetComponentInChildren<Image>();
+        //text_SpeedButton = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
         currentSpeed = 1;
     }
@@ -67,10 +70,12 @@ public class UIInfoWindow : View
         {
             case 1:
                 currentSpeed = 2;
-                text_SpeedButton.text = "X2"; break;
+                text_Speed.text = "X2"; 
+                break;
             case 2:
                 currentSpeed = 1;
-                text_SpeedButton.text = "X1"; break;
+                text_Speed.text = "X1"; 
+                break;
             default:
                 break;
         }
