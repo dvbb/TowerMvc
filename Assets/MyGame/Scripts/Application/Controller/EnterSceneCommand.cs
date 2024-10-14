@@ -28,6 +28,7 @@ public class EnterSceneCommand : Controller
                 RegisterView(GameObject.Find("Canvas").transform.Find("UICardTable").GetComponent<UICardTable>());
                 RegisterView(GameObject.Find("Canvas").transform.Find("UICardShower").GetComponent<UICardShower>());
                 RegisterView(GameObject.Find("Canvas").transform.Find("UIEscWindow").GetComponent<UIEscWindow>());
+                RegisterView(GameObject.Find("Canvas").transform.Find("UIInfoWindow").GetComponent<UIInfoWindow>());
                 GameObject.Find("UICardShower").SetActive(false);
                 break;
             case 4:

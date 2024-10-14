@@ -28,6 +28,7 @@ public class Consts
     public const string V_CardShower = "V_CardShower";
     public const string V_CardItem = "V_CardItem";
     public const string V_EscWindow = "V_EscWindow";
+    public const string V_InfoWindow = "V_InfoWindow";
 
     // controller
     #region Scene
