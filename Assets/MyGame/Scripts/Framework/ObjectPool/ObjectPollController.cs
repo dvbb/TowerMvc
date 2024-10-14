@@ -6,13 +6,15 @@ public class ObjectPollController : MonoSingleton<ObjectPollController>
 {
     Dictionary<string, SubPool> MyPools = new Dictionary<string, SubPool>();
 
-    public GameObject Spawn(string name)
+    public GameObject Spawn(object obj)
     {
+        string name = obj.ToString();
+
         SubPool subPool;
         if (!MyPools.ContainsKey(name))
         {
             // if current pool not contain, create new
-            RegisterSubPool(name);
+            RegisterSubPool(obj);
         }
 
         subPool = MyPools[name];
@@ -39,10 +41,11 @@ public class ObjectPollController : MonoSingleton<ObjectPollController>
         }
     }
 
-    private void RegisterSubPool(string name)
+    private void RegisterSubPool(object obj)
     {
-        GameObject obj = Resources.Load(name) as GameObject;
-        SubPool subPool = new SubPool(obj);
+        GameObject prefab = ResourcesLoadTool.Instance.ResourceLoadObject<GameObject>(obj);
+
+        SubPool subPool = new SubPool(prefab);
 
         MyPools.Add(subPool.Name, subPool);
     }

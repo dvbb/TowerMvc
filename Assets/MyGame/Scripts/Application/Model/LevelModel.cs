@@ -9,6 +9,7 @@ public class LevelModel : Singleton<LevelModel>
     public int Cost { get; private set; }
     public int CurrentRound { get; private set; }
     public int TotalRound { get; private set; }
+    public int TotalEnemies { get; private set; }
 
     public LevelInfo levelInfo;
 
@@ -24,13 +25,10 @@ public class LevelModel : Singleton<LevelModel>
         doc.LoadXml(XMLAsset.text);
 
         Tools.ParseXml(doc, ref levelInfo);
-    }
 
-    public void Init(int levelIndex, int cost, int totalRound)
-    {
-        LevelIndex = levelIndex;
-        Cost = cost;
-        CurrentRound = 1;
-        TotalRound = totalRound;
+        Cost = 500;
+        CurrentRound = 0;
+        TotalEnemies = 42;
+        TotalRound = levelInfo.Rounds.Count;
     }
 }

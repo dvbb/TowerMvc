@@ -32,7 +32,7 @@ public class EnemyBase : MonoBehaviour
 
         moveSpeed = defaultSpeed;
 
-
+        gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();
     }
 
     private void Update()
@@ -62,6 +62,8 @@ public class EnemyBase : MonoBehaviour
     private void EnemyReachCheckPoint()
     {
         gameObject.SetActive(false);
+        gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();
+        nextWaypoint = 0;
     }
 
     #endregion

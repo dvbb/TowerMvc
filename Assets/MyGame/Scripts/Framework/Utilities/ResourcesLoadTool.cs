@@ -14,6 +14,9 @@ public class ResourcesLoadTool : Singleton<ResourcesLoadTool>
             case "MusicType_Items":
                 filePath = "Music/Items/" + obj.ToString();
                 break;
+            case "Monster":
+                filePath = "Prefabs/Monster/" + obj.ToString();
+                break;
             default:
                 break;
         }
