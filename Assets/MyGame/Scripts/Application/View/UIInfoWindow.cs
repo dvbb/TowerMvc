@@ -21,16 +21,27 @@ public class UIInfoWindow : View
     private Sprite icon_start;
     private Sprite icon_stop;
 
+    private string Goal => LevelModel.Instance.DestroyedEnemies.ToString() + "/" + LevelModel.Instance.TotalEnemies.ToString();
+
     public override string Name => Consts.V_InfoWindow;
 
     public override void RegisterEvents()
     {
         base.RegisterEvents();
-
+        AttentionEvents.Add(Consts.E_SubtractHealth);
     }
 
     public override void HandleEvent(string eventName, object obj)
     {
+        switch (eventName)
+        {
+            case Consts.E_SubtractHealth:
+                text_Goal.text = Goal;
+                text_Health.text = GameModel.Instance.Health.ToString();
+                break;
+            default:
+                break;
+        }
     }
 
     private void Awake()
@@ -43,7 +54,11 @@ public class UIInfoWindow : View
         //image_StartButton = gameObject.GetComponentInChildren<Image>();
         //text_SpeedButton = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
+        // Init
         currentSpeed = 1;
+        text_Coin.text = LevelModel.Instance.Cost.ToString();
+        text_Health.text = GameModel.Instance.Health.ToString();
+        text_Goal.text = Goal;
     }
 
     #region Unity Button Click Method
@@ -70,11 +85,11 @@ public class UIInfoWindow : View
         {
             case 1:
                 currentSpeed = 2;
-                text_Speed.text = "X2"; 
+                text_Speed.text = "X2";
                 break;
             case 2:
                 currentSpeed = 1;
-                text_Speed.text = "X1"; 
+                text_Speed.text = "X1";
                 break;
             default:
                 break;

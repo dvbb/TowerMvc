@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class StaticData : Singleton<StaticData>
 {
+    #region Game Setting
+
     public void SetResolution()
     {
         int index = PlayerPrefs.GetInt(Consts.Key_Resolution);
@@ -38,4 +40,5 @@ public class StaticData : Singleton<StaticData>
     public float LoadBgmValue() => PlayerPrefs.GetFloat(Consts.Key_BgmValue);
     public void SaveSeValue(float value) => PlayerPrefs.SetFloat(Consts.Key_SeValue, value);
     public float LoadSeValue() => PlayerPrefs.GetFloat(Consts.Key_SeValue);
+    #endregion
 }

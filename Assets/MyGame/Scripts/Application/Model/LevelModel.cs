@@ -9,6 +9,7 @@ public class LevelModel : Singleton<LevelModel>
     public int Cost { get; private set; }
     public int CurrentRound { get; private set; }
     public int TotalRound { get; private set; }
+    public int DestroyedEnemies { get;  set; }
     public int TotalEnemies { get; private set; }
 
     public LevelInfo levelInfo;

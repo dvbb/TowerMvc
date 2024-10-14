@@ -59,7 +59,22 @@ public class EnemyBase : MonoBehaviour
         gameObject.transform.position = Vector3.MoveTowards(from, to, moveSpeed * Time.deltaTime);
     }
 
+    private void EnemyDead()
+    {
+        Reset();
+
+        // Modify level data
+        LevelModel.Instance.DestroyedEnemies++;
+        GameModel.Instance.SubtractHealth(1);
+    }
+
     private void EnemyReachCheckPoint()
+    {
+        EnemyDead();
+        GameModel.Instance.SubtractHealth(1);
+    }
+
+    private void Reset()
     {
         gameObject.SetActive(false);
         gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();

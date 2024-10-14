@@ -23,6 +23,8 @@ public class TurretBase : View
     // Component
     [SerializeField] private GameObject AttackRangeShower;
 
+    // Battle info
+    public List<EnemyBase> EnemyTargets = new List<EnemyBase>();
     protected float timer;
     public bool isSelected;
 
@@ -36,6 +38,14 @@ public class TurretBase : View
     {
         GetComponent<CircleCollider2D>().radius = attackRange;
         AttackRangeShower.transform.localScale = new Vector3(attackRange * 2, attackRange * 2, 0);
+
+        // Init
+        EnemyTargets.Clear();
+    }
+
+    private void Update()
+    {
+        Debug.Log(EnemyTargets.Count);
     }
 
     #region Method
@@ -68,21 +78,21 @@ public class TurretBase : View
     #region Collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.GetComponent<Enemy>() != null)
-        //{
-        //    Enemy target = collision.GetComponent<Enemy>();
-        //    EnemyTargets.Add(target);
-        //}
+        if (collision.GetComponent<EnemyBase>() != null)
+        {
+            EnemyBase target = collision.GetComponent<EnemyBase>();
+            EnemyTargets.Add(target);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //if (collision.GetComponent<Enemy>() != null)
-        //{
-        //    Enemy target = collision.GetComponent<Enemy>();
-        //    if (EnemyTargets.Contains(target))
-        //        EnemyTargets.Remove(target);
-        //}
+        if (collision.GetComponent<EnemyBase>() != null)
+        {
+            EnemyBase target = collision.GetComponent<EnemyBase>();
+            if (EnemyTargets.Contains(target))
+                EnemyTargets.Remove(target);
+        }
     }
     #endregion
 }
