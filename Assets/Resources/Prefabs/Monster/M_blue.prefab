@@ -124,7 +124,7 @@ MonoBehaviour:
   defaultSpeed: 3
   moveSpeed: 0
   maxHealth: 0
-  currentHealth: 0
+  currentHealth: 30
   fallingCoin: 5
 --- !u!70 &6997203240649276434
 CapsuleCollider2D:

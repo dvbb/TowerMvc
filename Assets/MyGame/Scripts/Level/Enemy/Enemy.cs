@@ -65,12 +65,15 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
 
         if (currentHealth < 0)
-            Dead();
+            StartCoroutine(Dead());
+
     }
 
-    private void Dead()
+    private IEnumerator Dead()
     {
-        Reset();
+        moveSpeed = 0;
+        yield return new WaitForSeconds(.5f);
+        gameObject.SetActive(false);
 
         // Modify level data
         LevelModel.Instance.EnemyDestroyed();
@@ -78,19 +81,19 @@ public class Enemy : MonoBehaviour
 
     private void EnemyReachCheckPoint()
     {
-        Dead();
+        gameObject.SetActive(false);
+        LevelModel.Instance.EnemyDestroyed();
         GameModel.Instance.SubtractHealth(1);
     }
 
-    private IEnumerator Reset()
+    public void Reset()
     {
         currentHealth = maxHealth;
-        gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();
+        moveSpeed = defaultSpeed;
         nextWaypoint = 0;
 
-        yield return new WaitForSeconds(.5f);
-
-        gameObject.SetActive(false);
+        gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();
+        gameObject.SetActive(true);
     }
 
     #endregion

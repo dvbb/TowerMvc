@@ -15,7 +15,8 @@ public class Spawner : MonoSingleton<Spawner>
             _spawnTimer = GetSpawnDelay();
             if (_enemiesSpawned < LevelModel.Instance.TotalEnemies)
             {
-                Game.Instance.ObjectPool.Spawn(PrefabEnum.Monster.M_blue);
+                GameObject prefab = Game.Instance.ObjectPool.Spawn(PrefabEnum.Monster.M_blue);
+                prefab.GetComponent<Enemy>().Reset();
                 _enemiesSpawned++;
             }
         }
@@ -23,6 +24,6 @@ public class Spawner : MonoSingleton<Spawner>
 
     private float GetSpawnDelay()
     {
-        return Random.Range(1, 4);
+        return Random.Range(.5f, 2);
     }
 }
