@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class TurretBase : View
+public class Turret : MonoBehaviour
 {
     public Card card;
 
@@ -22,17 +22,12 @@ public class TurretBase : View
 
     // Component
     [SerializeField] private GameObject AttackRangeShower;
+    [SerializeField] private Transform ShootPosition;
 
     // Battle info
-    public List<EnemyBase> EnemyTargets = new List<EnemyBase>();
+    public List<Enemy> EnemyTargets = new List<Enemy>();
     protected float timer;
     public bool isSelected;
-
-    public override string Name => "TurretBase";
-
-    public override void HandleEvent(string eventName, object obj)
-    {
-    }
 
     private void Awake()
     {
@@ -45,7 +40,17 @@ public class TurretBase : View
 
     private void Update()
     {
-        Debug.Log(EnemyTargets.Count);
+        timer -= Time.deltaTime;
+
+        if (timer < 0 && EnemyTargets.Count > 0)
+        {
+            timer = coldDown;
+            var prefab = Game.Instance.ObjectPool.Spawn(PrefabEnum.Bullet.Arrow);
+            var arrow = prefab.GetComponent<Bullet>();
+            arrow.Target = EnemyTargets[0];
+            arrow.Init(ShootPosition.position, EnemyTargets[0].transform.position);
+            arrow.canMove = true;
+        }
     }
 
     #region Method
@@ -53,10 +58,10 @@ public class TurretBase : View
     {
         isSelected = true;
         AttackRangeShower.SetActive(true);
-        SendEvent(Consts.E_CardUnSelect);
-        SendEvent(Consts.E_HideNode);
+        MVC.SendEvent(Consts.E_CardUnSelect);
+        MVC.SendEvent(Consts.E_HideNode);
 
-        SendEvent(Consts.E_CardItemClick, card);
+        MVC.SendEvent(Consts.E_CardItemClick, card);
     }
 
     public void DisableSelect()
@@ -67,29 +72,23 @@ public class TurretBase : View
 
     #endregion
 
-    #region Unity Callback
 
-    #endregion
-
-    #region Event Callback
-
-    #endregion
 
     #region Collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<EnemyBase>() != null)
+        if (collision.GetComponent<Enemy>() != null)
         {
-            EnemyBase target = collision.GetComponent<EnemyBase>();
+            Enemy target = collision.GetComponent<Enemy>();
             EnemyTargets.Add(target);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<EnemyBase>() != null)
+        if (collision.GetComponent<Enemy>() != null)
         {
-            EnemyBase target = collision.GetComponent<EnemyBase>();
+            Enemy target = collision.GetComponent<Enemy>();
             if (EnemyTargets.Contains(target))
                 EnemyTargets.Remove(target);
         }

@@ -17,6 +17,9 @@ public class ResourcesLoadTool : Singleton<ResourcesLoadTool>
             case "Monster":
                 filePath = "Prefabs/Monster/" + obj.ToString();
                 break;
+            case "Bullet":
+                filePath = "Prefabs/Bullet/" + obj.ToString();
+                break;
             default:
                 break;
         }

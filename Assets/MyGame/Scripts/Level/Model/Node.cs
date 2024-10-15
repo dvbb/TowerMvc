@@ -9,7 +9,7 @@ public class Node
     public int X;
     public int Y;
 
-    public TurretBase Turret;
+    public Turret Turret;
 
 
     public Node(int x, int y,GameObject prefab)

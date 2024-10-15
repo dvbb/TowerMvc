@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public class ShowerModel : Singleton<ShowerModel>
 {
-    TurretBase currentTurret;
+    Turret currentTurret;
 
-    public void ChangeSelectTurret(TurretBase turret)
+    public void ChangeSelectTurret(Turret turret)
     {
         currentTurret?.DisableSelect();
         turret.Select();

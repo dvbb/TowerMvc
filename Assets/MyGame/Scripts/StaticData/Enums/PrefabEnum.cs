@@ -6,4 +6,9 @@ public class PrefabEnum
     {
         M_blue,
     }
+
+    public enum Bullet
+    {
+        Arrow
+    }
 }

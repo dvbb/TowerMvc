@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] public Transform demageTextPosition;
 
     [Header("Basic info")]
     [SerializeField] protected float defaultSpeed = 3f;
-    public float moveSpeed;
+   public float moveSpeed;
     [SerializeField] public float maxHealth;
     public float currentHealth;
     [SerializeField] public int fallingCoin = 5;
@@ -59,26 +60,37 @@ public class EnemyBase : MonoBehaviour
         gameObject.transform.position = Vector3.MoveTowards(from, to, moveSpeed * Time.deltaTime);
     }
 
-    private void EnemyDead()
+    public void TakeDamage( float damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth < 0)
+            Dead();
+    }
+
+    private void Dead()
     {
         Reset();
 
         // Modify level data
-        LevelModel.Instance.DestroyedEnemies++;
-        GameModel.Instance.SubtractHealth(1);
+        LevelModel.Instance.EnemyDestroyed();
     }
 
     private void EnemyReachCheckPoint()
     {
-        EnemyDead();
+        Dead();
         GameModel.Instance.SubtractHealth(1);
     }
 
-    private void Reset()
+    private IEnumerator Reset()
     {
-        gameObject.SetActive(false);
+        currentHealth = maxHealth;
         gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();
         nextWaypoint = 0;
+
+        yield return new WaitForSeconds(.5f);
+
+        gameObject.SetActive(false);
     }
 
     #endregion

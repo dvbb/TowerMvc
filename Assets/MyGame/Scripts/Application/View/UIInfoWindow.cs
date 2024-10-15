@@ -29,6 +29,7 @@ public class UIInfoWindow : View
     {
         base.RegisterEvents();
         AttentionEvents.Add(Consts.E_SubtractHealth);
+        AttentionEvents.Add(Consts.E_EnemyDestroyed);
     }
 
     public override void HandleEvent(string eventName, object obj)
@@ -38,6 +39,9 @@ public class UIInfoWindow : View
             case Consts.E_SubtractHealth:
                 text_Goal.text = Goal;
                 text_Health.text = GameModel.Instance.Health.ToString();
+                break;
+            case Consts.E_EnemyDestroyed:
+                text_Goal.text = Goal;
                 break;
             default:
                 break;

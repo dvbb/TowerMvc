@@ -43,10 +43,12 @@ public class ObjectPollController : MonoSingleton<ObjectPollController>
 
     private void RegisterSubPool(object obj)
     {
+        // Create parent empty and game object prefab
+        GameObject emptyGameObject = new GameObject(obj.ToString());
         GameObject prefab = ResourcesLoadTool.Instance.ResourceLoadObject<GameObject>(obj);
 
-        SubPool subPool = new SubPool(prefab);
-
+        // rergister subpool
+        SubPool subPool = new SubPool(prefab, emptyGameObject.transform);
         MyPools.Add(subPool.Name, subPool);
     }
 }

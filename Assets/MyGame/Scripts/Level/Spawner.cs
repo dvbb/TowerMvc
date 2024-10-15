@@ -7,11 +7,6 @@ public class Spawner : MonoSingleton<Spawner>
     private float _spawnTimer;
     private int _enemiesSpawned;
 
-    private void Awake()
-    {
-        base.Awake();
-    }
-
     private void Update()
     {
         _spawnTimer -= Time.deltaTime;

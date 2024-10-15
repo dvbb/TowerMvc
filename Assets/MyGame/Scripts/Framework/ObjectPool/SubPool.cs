@@ -5,6 +5,7 @@ using UnityEngine;
 public class SubPool
 {
     List<GameObject> mySubPool = new List<GameObject>();
+    Transform parentTransform;
     GameObject m_Prefab;
 
     public string Name
@@ -15,9 +16,10 @@ public class SubPool
         }
     }
 
-    public SubPool(GameObject prefab)
+    public SubPool(GameObject prefab, Transform transform)
     {
         m_Prefab = prefab;
+        parentTransform = transform;
     }
 
     public GameObject Spawn()
@@ -35,6 +37,7 @@ public class SubPool
         if (obj == null)
         {
             obj = GameObject.Instantiate(m_Prefab);
+            obj.transform.parent = parentTransform;
             mySubPool.Add(obj);
         }
         obj.SetActive(true);

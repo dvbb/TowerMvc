@@ -32,4 +32,10 @@ public class LevelModel : Singleton<LevelModel>
         TotalEnemies = 42;
         TotalRound = levelInfo.Rounds.Count;
     }
+
+    public void EnemyDestroyed()
+    {
+        DestroyedEnemies++;
+        MVC.SendEvent(Consts.E_EnemyDestroyed);
+    }
 }

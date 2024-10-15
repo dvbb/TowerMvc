@@ -36,7 +36,6 @@ public class UILevel : View
     private Card draggedCard;
     private GameObject prefab;
 
-    // Node Select
     private bool isTurretSelected;
     #endregion
 
@@ -357,7 +356,7 @@ public class UILevel : View
                 {
                     grid.IsHolder = false;
                     node.isDeploy = true;
-                    node.Turret = prefab.GetComponent<TurretBase>();
+                    node.Turret = prefab.GetComponent<Turret>();
                     node.Turret.card = draggedCard;
                     node.Turret.DisableSelect();
                     prefab.transform.position = GetGridPosition(grid.X, grid.Y);

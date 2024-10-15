@@ -54,4 +54,6 @@ public class Consts
     public const string E_UIWindow = "E_UIWindow";
 
     public const string E_SubtractHealth = "E_SubtractHealth";
+    public const string E_EnemyDestroyed = "E_EnemyDestroyed";
+    
 }
