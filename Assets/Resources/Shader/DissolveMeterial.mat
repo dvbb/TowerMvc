@@ -34,7 +34,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DissolveMeterial
-  m_Shader: {fileID: -6465566751694194690, guid: b7d2627cbecc2a343a10ca9e4ec2be8e, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 3a9917228ce87504ca49d484675eedc5, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

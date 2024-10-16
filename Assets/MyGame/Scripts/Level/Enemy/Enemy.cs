@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Basic info")]
     [SerializeField] protected float defaultSpeed = 3f;
-   public float moveSpeed;
+    public float moveSpeed;
     [SerializeField] public float maxHealth;
     public float currentHealth;
     [SerializeField] public int fallingCoin = 5;
@@ -21,15 +21,20 @@ public class Enemy : MonoBehaviour
     private Vector3 from => transform.position;
     private Vector3 to => LevelModel.Instance.waypoints[nextWaypoint] + spritePivotOffset;
 
+    // Dead logic
+    private bool isDying;
+
     #region Components
     public Animator Anim { get; private set; }
     public SpriteRenderer sr { get; private set; }
+    private DissolveEffect fxController;
     #endregion
 
     private void Awake()
     {
         Anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        fxController = GetComponent<DissolveEffect>();
 
         moveSpeed = defaultSpeed;
 
@@ -39,6 +44,12 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         Walk();
+
+        // If enemy completely dissolves, then reset
+        if (isDying && fxController.GetDissolveAmount() == 1)
+        {
+            Reset();
+        }
     }
 
     #region Method
@@ -60,20 +71,25 @@ public class Enemy : MonoBehaviour
         gameObject.transform.position = Vector3.MoveTowards(from, to, moveSpeed * Time.deltaTime);
     }
 
-    public void TakeDamage( float damage)
+    public void TakeDamage(float damage)
     {
+        // if enemy is already dead before bullet arrival, then do nothing
+        if (isDying)
+            return;
+
         currentHealth -= damage;
 
         if (currentHealth < 0)
-            StartCoroutine(Dead());
-
+        {
+            isDying = true;
+            Dead();
+        }
     }
 
-    private IEnumerator Dead()
+    private void Dead()
     {
         moveSpeed = 0;
-        yield return new WaitForSeconds(.5f);
-        gameObject.SetActive(false);
+        fxController.StartDissolve();
 
         // Modify level data
         LevelModel.Instance.EnemyDestroyed();
@@ -91,6 +107,8 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         moveSpeed = defaultSpeed;
         nextWaypoint = 0;
+        isDying = false;
+        fxController.ResetDissolveAmount();
 
         gameObject.transform.position = LevelModel.Instance.waypoints.FirstOrDefault();
         gameObject.SetActive(true);

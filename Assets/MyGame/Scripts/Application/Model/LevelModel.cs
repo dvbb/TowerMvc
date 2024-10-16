@@ -29,7 +29,7 @@ public class LevelModel : Singleton<LevelModel>
 
         Cost = 500;
         CurrentRound = 0;
-        TotalEnemies = 42;
+        TotalEnemies = 12;
         TotalRound = levelInfo.Rounds.Count;
     }
 
